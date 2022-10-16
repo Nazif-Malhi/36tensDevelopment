@@ -6,7 +6,7 @@ import Packages from "../layout/Packages";
 import Rights from "../layout/Rights";
 import Services from "../layout/Services";
 
-const MainPage = () => {
+const Mockup = () => {
   return (
     <React.Fragment>
       <Navbar />
@@ -19,4 +19,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default Mockup;

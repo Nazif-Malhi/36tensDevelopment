@@ -1,19 +1,23 @@
 import React from "react";
+import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 
 import AdminNav from "../layout/AdminNav";
 import AdminSideNav from "../layout/AdminSideNav";
+import Surveys from "./Surveys";
+import "./Master.css";
 
-const MasterContainer = styled.div`
-  height: 100vh;
-  width: 100%;
-`;
 const Master = () => {
   return (
-    <MasterContainer>
+    <div className="Master">
       <AdminNav />
       <AdminSideNav />
-    </MasterContainer>
+      <div className="masterwrapper">
+        <Routes>
+          <Route path="survey" element={<Surveys />} />
+        </Routes>
+      </div>
+    </div>
   );
 };
 

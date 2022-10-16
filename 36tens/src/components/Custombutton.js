@@ -27,15 +27,33 @@ const ButtonStyle = styled.div`
   .textnormal {
     color: #ffffff;
   }
+  .margin-right {
+    margin-right: 10px;
+  }
+  .margin-top {
+    margin-top: 10px;
+  }
+  .floatRight {
+    float: right;
+  }
 `;
 
-const CustomButton = ({ type, children, width, height, ...props }) => {
+const CustomButton = ({
+  type,
+  children,
+  width,
+  height,
+  style,
+  onClick,
+  ...props
+}) => {
   return (
     <ButtonStyle>
       <button
         className={type}
         {...props}
-        style={{ width: width, height: height }}
+        onClick={onClick}
+        style={{ width: width, height: height, style }}
       >
         {children}
       </button>

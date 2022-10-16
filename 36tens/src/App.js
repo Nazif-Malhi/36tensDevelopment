@@ -17,9 +17,7 @@ function App() {
           <Route path="signup" element={<SignUp />} />
           <Route path="forget" element={<Forget />} />
         </Route>
-        <Route path="admin" element={<Master />}>
-          <Route path="surveys" element={<Surveys />} />
-        </Route>
+        <Route path="/admin/*" element={<Master />} />
       </Routes>
     </>
   );

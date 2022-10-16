@@ -10,6 +10,7 @@ const SideNavComponent = styled.div`
   border-right: 2px solid #edeff2;
   flex-direction: column;
   align-items: center;
+  position: fixed;
   .circle {
     display: flex;
     align-items: center;

@@ -12,7 +12,9 @@ import Table from "../components/table/Table";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Modal from "react-bootstrap/Modal";
-import { TextField } from "@mui/material";
+import { Checkbox, TextField } from "@mui/material";
+
+import { AiOutlineUpload } from "react-icons/ai";
 
 const SurveyContainer = styled.div`
   width: 100%;
@@ -144,11 +146,148 @@ function AppraiseeModal(props) {
   );
 }
 
+function UploadCSV_Modal(props) {
+  const Upload = styled.div`
+    border-radius: 7px;
+    width: 100%;
+    height: 220px;
+    border: 2px dashed #a2abb6;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    :hover {
+      border: 2px dashed #3b4f66;
+      color: #3b4f66;
+      h6 {
+        color: #3b4f66;
+      }
+    }
+    p {
+      color: #a2abb6;
+    }
+    h6 {
+      color: #a2abb6;
+    }
+  `;
+  return (
+    <Modal {...props} aria-labelledby="contained-modal-title-vcenter" size="lg">
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">Upload CSV</Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="show-grid">
+        <Container>
+          <p style={{ color: "#a2abb6" }}>File.csv/File.txt</p>
+          <Upload>
+            <AiOutlineUpload style={{ fontSize: "5.7rem", color: "a2abb6" }} />
+            <h6>Drag & Drop here</h6>
+          </Upload>
+          <Row style={{ textAlign: "right" }}>
+            <p style={{ color: "#a2abb6" }}>
+              Can't Import ? <a href="/needhelp">Need Help</a>
+            </p>
+          </Row>
+        </Container>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          style={{ background: "white", border: "none", color: "black" }}
+          onClick={props.onHide}
+        >
+          Cancel
+        </Button>
+        <Button style={{ background: "#a600a0", border: "none" }}>
+          Create Survey
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
+function CreateSurveyModal(props) {
+  const [Category, setCategory] = useState("");
+
+  const handleCategory = (event) => {
+    setCategory(event.target.value);
+  };
+  return (
+    <Modal {...props} aria-labelledby="contained-modal-title-vcenter" size="lg">
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Name Your Survey
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="show-grid">
+        <Container>
+          <Row style={{ marginBottom: "10px" }}>
+            <TextField
+              id="outlined-name"
+              label="Survey Name"
+              size="small"
+              fullWidth
+            />
+          </Row>
+          <Row>
+            <FormControl
+              sx={{ width: "100%" }}
+              size="small"
+              style={{ background: "white" }}
+            >
+              <Select
+                value={Category}
+                onChange={handleCategory}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value="">
+                  <em>Category</em>
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
+          </Row>
+          <Row>
+            <Col md="auto">
+              <Checkbox defaultChecked color="secondary" />{" "}
+            </Col>
+            <Col
+              style={{
+                textAlign: "left",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <p style={{ padding: "0px", margin: "0px" }}>
+                I have imported appraisee
+              </p>
+            </Col>
+          </Row>
+        </Container>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button
+          style={{ background: "white", border: "none", color: "black" }}
+          onClick={props.onHide}
+        >
+          Cancel
+        </Button>
+        <Button style={{ background: "#a600a0", border: "none" }}>
+          Create Survey
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
 const Surveys = () => {
   const [recentlyUpdated, setRecentlyUpdated] = useState("");
   const [allTypes, setAllTypes] = useState("");
   const [active, setActive] = useState("");
   const [appraiseeModal, setAppraiseeModal] = useState(false);
+  const [uploadCSV_Modal, setUploadCSV_Modal] = useState(false);
+  const [createSurvey_Modal, setSurvey_Modal] = useState(false);
 
   const handleRecentlyUpdated = (event) => {
     setRecentlyUpdated(event.target.value);
@@ -171,7 +310,12 @@ const Surveys = () => {
           >
             <AiOutlinePlus /> Add New Appraisee
           </CustomButton>
-          <CustomButton type={"normal textnormal"} width="220px" height="40px">
+          <CustomButton
+            type={"normal textnormal"}
+            width="220px"
+            height="40px"
+            onClick={() => setUploadCSV_Modal(true)}
+          >
             <AiOutlinePlus /> Bulk Add
           </CustomButton>
         </div>
@@ -251,6 +395,7 @@ const Surveys = () => {
               type={"normal textnormal margin-top floatRight"}
               width="220px"
               height="40px"
+              onClick={() => setSurvey_Modal(true)}
             >
               Create New Survey
             </CustomButton>
@@ -260,6 +405,14 @@ const Surveys = () => {
       <AppraiseeModal
         show={appraiseeModal}
         onHide={() => setAppraiseeModal(false)}
+      />
+      <UploadCSV_Modal
+        show={uploadCSV_Modal}
+        onHide={() => setUploadCSV_Modal(false)}
+      />
+      <CreateSurveyModal
+        show={createSurvey_Modal}
+        onHide={() => setSurvey_Modal(false)}
       />
     </>
   );

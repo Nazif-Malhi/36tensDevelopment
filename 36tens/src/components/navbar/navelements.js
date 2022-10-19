@@ -1,5 +1,6 @@
 import { FaBars } from "react-icons/fa";
-import { NavLink as Link } from "react-router-dom";
+import { Link } from "react-scroll";
+import { NavLink as CusLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const Nav = styled.nav`
@@ -58,7 +59,7 @@ export const NavBtn = styled.nav`
   }
 `;
 
-export const NavBtnLink = styled(Link)`
+export const NavBtnLink = styled(CusLink)`
   border-radius: 4px;
   background: #232340;
   padding: 12px 25px;

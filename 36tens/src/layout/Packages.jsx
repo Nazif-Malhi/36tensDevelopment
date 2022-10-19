@@ -107,7 +107,7 @@ const PricingWrapper = styled.div`
   }
 `;
 
-const Packages = () => {
+const Packages = ({ id }) => {
   return (
     <PricingContainer>
       <img src={Path1} alt="path" />
@@ -125,7 +125,7 @@ const Packages = () => {
           <BtnLink to="/onlinedemo">Request Online Demo</BtnLink>
         </Btn>
 
-        <Pricing>
+        <Pricing id={id}>
           <h1>Pricing</h1>
           <PricingWrapper>
             <div class="row">

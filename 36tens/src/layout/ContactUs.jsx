@@ -25,9 +25,9 @@ const ContactWrapper = styled.div`
   }
 `;
 
-const ContactUs = () => {
+const ContactUs = ({ id }) => {
   return (
-    <ContactWrapper>
+    <ContactWrapper id={id}>
       <div className="contact">
         <h2>Contact Us</h2>
         <InputContact type="text" placeholder="Full Name" required="required" />

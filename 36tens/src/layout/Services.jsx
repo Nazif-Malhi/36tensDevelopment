@@ -115,9 +115,9 @@ const Scene = styled.div`
   }
 `;
 
-const Services = () => {
+const Services = ({ id }) => {
   return (
-    <ServicesContainer>
+    <ServicesContainer id={id}>
       <img className="path" src={Path1} alt="path" />
       <ServiceWrapper>
         <div className="midContainer">

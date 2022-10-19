@@ -29,9 +29,9 @@ const DisplayContainer = styled.div`
   }
 `;
 
-const Home = () => {
+const Home = ({ id }) => {
   return (
-    <HomeContainer>
+    <HomeContainer id={id}>
       <DisplayContainer>
         <div class="parents">
           <div class="child">

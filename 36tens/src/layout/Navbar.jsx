@@ -18,16 +18,41 @@ const Navbar = () => {
       </NavLink>
       <Bars />
       <NavMenu>
-        <NavLink to="/home" activeStyle style={{ color: "#202BA3" }}>
+        <NavLink
+          to="home"
+          spy={true}
+          smooth={true}
+          offset={50}
+          duration={500}
+          style={{ color: "#202BA3" }}
+        >
           Home
         </NavLink>
-        <NavLink to="/pricing" activeStyle>
+        <NavLink
+          to="pricing"
+          spy={true}
+          smooth={true}
+          offset={50}
+          duration={500}
+        >
           Pricing
         </NavLink>
-        <NavLink to="/services" activeStyle>
+        <NavLink
+          to="services"
+          spy={true}
+          smooth={true}
+          offset={50}
+          duration={500}
+        >
           Services
         </NavLink>
-        <NavLink to="/contact-us" activeStyle>
+        <NavLink
+          to="contact-us"
+          spy={true}
+          smooth={true}
+          offset={50}
+          duration={500}
+        >
           Contact Us
         </NavLink>
       </NavMenu>

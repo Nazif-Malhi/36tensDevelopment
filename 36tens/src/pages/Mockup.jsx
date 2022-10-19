@@ -10,10 +10,10 @@ const Mockup = () => {
   return (
     <React.Fragment>
       <Navbar />
-      <Home />
-      <Packages />
-      <Services />
-      <ContactUs />
+      <Home id={"home"} />
+      <Packages id={"pricing"} />
+      <Services id={"services"} />
+      <ContactUs id={"contact-us"} />
       <Rights />
     </React.Fragment>
   );

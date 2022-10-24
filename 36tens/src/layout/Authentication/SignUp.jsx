@@ -128,7 +128,7 @@ const SignUp = () => {
           </Row>
           <Row>
             <Col>
-              <p>
+              <p style={{ marginTop: "10px" }}>
                 if you already have an account?{" "}
                 <a href="/authentication/login">Login Now</a>
               </p>

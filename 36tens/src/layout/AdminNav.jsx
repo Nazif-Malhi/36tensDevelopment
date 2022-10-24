@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { BsPersonFill } from "react-icons/bs";
 import { IoIosNotifications } from "react-icons/io";
-import { Link } from "react-router-dom";
 import { Logo } from "../assets/images";
 import { Nav, NavMenu, NavLink } from "../components/navbar/navelements";
 import { MdOutlineCancel } from "react-icons/md";
@@ -87,8 +86,6 @@ const NotificationsIcon = styled(IoIosNotifications)`
   }
 `;
 
-const LinkNotificationIcon = styled(Link)``;
-
 const AdminNav = () => {
   return (
     <Navbar>
@@ -96,8 +93,6 @@ const AdminNav = () => {
         <img className="logo" src={Logo} alt="logo" />
         <Nav>
           <NavMenu>
-            <AltNavLink to="/home">Dashboard</AltNavLink>
-            <AltNavLink to="/pricing">My Surveys</AltNavLink>
             <AltNavLink to="/services">About Us</AltNavLink>
             <AltNavLink to="/contact-us">Contact Us</AltNavLink>
           </NavMenu>

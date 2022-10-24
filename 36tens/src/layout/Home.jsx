@@ -1,5 +1,4 @@
 import React from "react";
-import { Container, Col, Row, Button } from "react-bootstrap";
 import styled from "styled-components";
 import { Desktop } from "../assets/images";
 import CustomButton from "../components/Custombutton";
@@ -33,8 +32,8 @@ const Home = ({ id }) => {
   return (
     <HomeContainer id={id}>
       <DisplayContainer>
-        <div class="parents">
-          <div class="child">
+        <div className="parents">
+          <div className="child">
             <div className="text">
               <h1>360</h1>
               <h2>FEEDBACK</h2>
@@ -59,7 +58,7 @@ const Home = ({ id }) => {
               </div>
             </div>
           </div>
-          <div class="child">
+          <div className="child">
             <img
               src={Desktop}
               alt="desktop"

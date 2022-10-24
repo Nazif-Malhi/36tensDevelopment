@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import { Path1 } from "../assets/images";
-import ActivePricingCard from "../components/cards/ActivePricingCard";
-import InActivePricingCard from "../components/cards/InActivePricingCard";
+// import ActivePricingCard from "../components/cards/ActivePricingCard";
+// import InActivePricingCard from "../components/cards/InActivePricingCard";
+import PricingCard from "../components/cards/PricingCard";
 
 const PricingContainer = styled.div`
   display: flex;
@@ -79,7 +80,7 @@ const Pricing = styled.div`
 const PricingWrapper = styled.div`
   width: 100%;
   height: 80%;
-  margin-top: 50px;
+  margin-top: 150px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -107,6 +108,49 @@ const PricingWrapper = styled.div`
   }
 `;
 
+const initial = [
+  {
+    price: "0",
+    per: "month",
+    subHeading: "Free Trial",
+    desc: "Get a feel of the tool & Limited Analytics",
+    list: [
+      "Create Survey",
+      "Add Atleast 5 competencies",
+      "Customized Statments",
+      "2 Users Team",
+    ],
+  },
+];
+const mid = [
+  {
+    price: "225",
+    per: "per appraisal",
+    subHeading: "Standard360",
+    desc: "Advance tools & analytics & more team members",
+    list: [
+      "Create Surveys",
+      "Unlimited Premium",
+      "50 Users team",
+      "Shared Workspace",
+    ],
+  },
+];
+const popular = [
+  {
+    price: "150",
+    per: "per appraisal",
+    subHeading: "Customer360",
+    desc: "Customize surveys user profiles and much more",
+    list: [
+      "Create Surveys",
+      "Customized Questions",
+      "Customized Statments",
+      "20 Users Team",
+      "Shared Workspace",
+    ],
+  },
+];
 const Packages = ({ id }) => {
   return (
     <PricingContainer>
@@ -128,27 +172,15 @@ const Packages = ({ id }) => {
         <Pricing id={id}>
           <h1>Pricing</h1>
           <PricingWrapper>
-            <div class="row">
-              <div class="column">
-                <InActivePricingCard
-                  price={"0"}
-                  per={"per month"}
-                  subHeading={"Free Trial"}
-                  discription={"Get a feel of the tool & Limited Analytics"}
-                  list={1}
-                />
+            <div className="row">
+              <div className="column">
+                <PricingCard list={initial} />
               </div>
-              <div class="column">
-                <InActivePricingCard
-                  price={"225"}
-                  per={"per appraisal"}
-                  subHeading={"Standard360"}
-                  discription={"Advance tools & analytics & more team members"}
-                  list={2}
-                />
+              <div className="column">
+                <PricingCard list={mid} />
               </div>
-              <div class="column">
-                <ActivePricingCard />
+              <div className="column">
+                <PricingCard list={popular} popular={true} />
               </div>
             </div>
           </PricingWrapper>

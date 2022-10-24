@@ -5,7 +5,6 @@ import LogIn from "./layout/Authentication/LogIn";
 import SignUp from "./layout/Authentication/SignUp";
 import Forget from "./layout/Authentication/Forget";
 import Mockup from "./pages/Mockup";
-import Surveys from "./pages/Surveys";
 import Master from "./pages/Master";
 function App() {
   return (

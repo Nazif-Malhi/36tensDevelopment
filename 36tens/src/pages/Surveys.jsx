@@ -146,7 +146,7 @@ function AppraiseeModal(props) {
   );
 }
 
-function UploadCSV_Modal(props) {
+function UploadCsvModal(props) {
   const Upload = styled.div`
     border-radius: 7px;
     width: 100%;
@@ -406,7 +406,7 @@ const Surveys = () => {
         show={appraiseeModal}
         onHide={() => setAppraiseeModal(false)}
       />
-      <UploadCSV_Modal
+      <UploadCsvModal
         show={uploadCSV_Modal}
         onHide={() => setUploadCSV_Modal(false)}
       />

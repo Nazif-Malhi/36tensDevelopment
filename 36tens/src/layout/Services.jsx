@@ -14,15 +14,12 @@ const ServicesContainer = styled.div`
     max-width: 100%;
     max-height: 100%;
     margin-top: -520px;
-    // @media screen and (min-width: 1085) {
-    //   margin-top: -900px;
-    // }
   }
 `;
 
 const ServiceWrapper = styled.div`
   position: absolute;
-  top: 380%;
+  top: 400%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 70%;
@@ -147,10 +144,10 @@ const Services = ({ id }) => {
             </div>
             <div className="column">
               <div className="servicecard_wrapper">
-                <ServiceCard active={true} />
-                <ServiceCard active={false} />
-                <ServiceCard active={false} />
-                <ServiceCard active={false} />
+                <ServiceCard active={true} heading="Feedbacks Survey" />
+                <ServiceCard active={false} heading="Development" />
+                <ServiceCard active={false} heading="Insights" />
+                <ServiceCard active={false} heading="Work Flows" />
               </div>
             </div>
           </div>

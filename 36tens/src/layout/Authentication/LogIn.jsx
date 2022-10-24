@@ -5,7 +5,6 @@ import { protectedbackground } from "../../assets/images";
 import TextField from "@mui/material/TextField";
 import { Logo } from "../../assets/images";
 import CustomButton from "../../components/Custombutton";
-import { useNavigate } from "react-router-dom";
 
 const LoginContainer = styled.div`
   display: flex;
@@ -40,7 +39,6 @@ const style = {
 };
 
 const LogIn = () => {
-  const navigate = useNavigate();
   return (
     <LoginContainer>
       <LogInWrapper>
@@ -82,9 +80,8 @@ const LogIn = () => {
             <Col>
               <p>
                 Forget your password{" "}
-                <a href="/authentication/forget">Recover now</a>
-                or Register yet ?{" "}
-                <a href="/authentication/signup">Register Now</a>
+                <a href="/authentication/forget">Recover now</a> or Register yet
+                ? <a href="/authentication/signup">Register Now</a>
               </p>
             </Col>
           </Row>

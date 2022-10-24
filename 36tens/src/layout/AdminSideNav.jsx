@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { RiEditBoxLine } from "react-icons/ri";
 import { IoIosPeople } from "react-icons/io";
 import { AiOutlineUserSwitch, AiFillFileText } from "react-icons/ai";
+import { MdOutlineDashboard } from "react-icons/md";
+import { BsFiles } from "react-icons/bs";
 
 const SideNavComponent = styled.div`
   width: 60px;
@@ -10,6 +12,7 @@ const SideNavComponent = styled.div`
   border-right: 2px solid #edeff2;
   flex-direction: column;
   align-items: center;
+  display: flex;
   position: fixed;
   .circle {
     display: flex;
@@ -24,6 +27,10 @@ const SideNavComponent = styled.div`
     color: #80858e;
     margin: 5px;
     font-size: 1.2rem;
+    :hover {
+      background: #232340;
+      color: white;
+    }
   }
 `;
 const AdminSideNav = () => {
@@ -33,6 +40,12 @@ const AdminSideNav = () => {
   return (
     <SideNavComponent>
       <br />
+      <div className="circle">
+        <MdOutlineDashboard style={{ style }} />
+      </div>
+      <div className="circle">
+        <BsFiles style={{ style }} />
+      </div>
       <div className="circle">
         <RiEditBoxLine style={{ style }} />
       </div>

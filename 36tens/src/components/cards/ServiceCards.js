@@ -2,29 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { BsArrowRight } from "react-icons/bs";
 
-const ServiceContainerActive = styled.div`
-  width: 100%;
-  height: 200px;
-  border-radius: 40px;
-  text-align: start;
-  background: white;
-  margin-top: -30px;
-
-  background: #3942ad;
-  color: white;
-
-  .servicetext {
-    margin-top: 40px;
-    margin-left: 50px;
-    h1 {
-      margin-bottom: 0px;
-    }
-    p {
-      margin-top: 0px;
-      font-size: 15px;
-    }
-  }
-`;
 const ServiceContainerInactive = styled.div`
   width: 100%;
   height: 200px;
@@ -47,28 +24,25 @@ const ServiceContainerInactive = styled.div`
       font-size: 15px;
     }
   }
+  :hover {
+    z-index: 1000;
+    transition: 0.5s ease-in-out;
+    transform: scaleY(1.1);
+    background: #3942ad;
+    color: white;
+  }
 `;
 
-const ServiceCard = ({ active }) => {
+const ServiceCard = ({ active, heading }) => {
   return (
     <>
-      {active ? (
-        <ServiceContainerActive>
-          <div className="servicetext">
-            <h1>Feedbacks Surveys</h1>
-            <p>Explore Now</p>
-            <BsArrowRight style={{ color: "white", fontSize: "1.75rem" }} />
-          </div>
-        </ServiceContainerActive>
-      ) : (
-        <ServiceContainerInactive>
-          <div className="servicetext">
-            <h1>Feedbacks Surveys</h1>
-            <p>Explore Now</p>
-            <BsArrowRight style={{ color: "black", fontSize: "1.75rem" }} />
-          </div>
-        </ServiceContainerInactive>
-      )}
+      <ServiceContainerInactive>
+        <div className="servicetext">
+          <h1>{heading}</h1>
+          <p>Explore Now</p>
+          <BsArrowRight style={{ fontSize: "1.75rem" }} />
+        </div>
+      </ServiceContainerInactive>
     </>
   );
 };

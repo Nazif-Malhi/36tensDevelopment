@@ -7,6 +7,7 @@ import CompetenciesQuest from "../components/cards/CompetenciesQuest";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { TextField } from "@mui/material";
+import { competencies_questions } from "../assets/Data/CompetenciesData";
 
 const Competenciescontainer = styled.div`
   width: 100%;
@@ -20,6 +21,33 @@ const Competenciescontainer = styled.div`
     h2 {
       color: #979797;
     }
+  }
+  .competenciesBody {
+    height: 70%;
+    margin-bottom: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    /* width */
+    ::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #a600a0;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #34485f;
+    }
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
   .body {
     width: 100%;
@@ -77,16 +105,24 @@ const Competencies = () => {
   const [createCompetency_Modal, setCompetency_Modal] = useState(false);
   const [competencyName, setCompetencyName] = useState("");
   const [compValues, setCompValues] = useState([]);
+  const [isShowQuestion, setShowQuestion] = useState(false);
+  const [indexOfComp, setIndexOfComp] = useState(0);
 
   let addCompetency = (val) => {
     setCompValues([...compValues, val]);
     setCompetency_Modal(false);
+    setShowQuestion(false);
   };
 
   let removeCompetency = (index) => {
     let temp = [...compValues];
     temp.splice(index, 1);
     setCompValues(temp);
+  };
+
+  let showCompetenciesQuestion = (index) => {
+    setShowQuestion(true);
+    setIndexOfComp(index);
   };
 
   return (
@@ -98,15 +134,27 @@ const Competencies = () => {
               <div className="header">
                 <h2>Competencies</h2>
               </div>
-              {compValues.map((value, index) => {
-                return (
-                  <CompetenciesCards
-                    title={value}
-                    type={"del"}
-                    handleClick={() => removeCompetency(index)}
-                  />
-                );
-              })}
+              <div className="competenciesBody">
+                {/* Competencies */}
+                {competencies_questions.map((value, index) => {
+                  return (
+                    <CompetenciesCards
+                      title={value.heading}
+                      handleClick={() => showCompetenciesQuestion(index)}
+                    />
+                  );
+                })}
+                {/* Dynamically Competencies */}
+                {compValues.map((value, index) => {
+                  return (
+                    <CompetenciesCards
+                      title={value}
+                      type={"del"}
+                      handleClick={() => removeCompetency(index)}
+                    />
+                  );
+                })}
+              </div>
               <CompetenciesCards
                 title={"Create new competency"}
                 handleClick={() => {
@@ -118,7 +166,7 @@ const Competencies = () => {
             <Col xs={12} md={8}>
               <div className="body">
                 <h5>CEO 360 Form</h5>
-                <CompetenciesQuest />
+                <CompetenciesQuest type={isShowQuestion} index={indexOfComp} />
               </div>
             </Col>
           </Row>

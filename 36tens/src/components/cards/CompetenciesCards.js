@@ -35,9 +35,9 @@ const CompetenciesCards = ({ title, handleClick, type }) => {
         <Col md={"auto"}>
           {type === "add" ? (
             <AiOutlinePlus style={{ fontSize: "1.5rem" }} />
-          ) : (
+          ) : type === "del" ? (
             <MdOutlineDelete style={{ fontSize: "1.5rem" }} />
-          )}
+          ) : null}
         </Col>
       </Row>
     </Wrapper>

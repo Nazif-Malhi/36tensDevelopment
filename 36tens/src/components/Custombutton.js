@@ -36,6 +36,13 @@ const ButtonStyle = styled.div`
   .floatRight {
     float: right;
   }
+  .disabled {
+    background: #c3cad9;
+    cursor: default;
+    :hover {
+      background: #c3cad9;
+    }
+  }
 `;
 
 const CustomButton = ({

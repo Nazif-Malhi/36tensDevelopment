@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import { protectedbackground } from "../../assets/images";
 import TextField from "@mui/material/TextField";
 import { Logo } from "../../assets/images";
 import CustomButton from "../../components/Custombutton";
+import validator from "validator";
+import { useNavigate } from "react-router-dom";
 
 const LoginContainer = styled.div`
   display: flex;
@@ -39,6 +41,28 @@ const style = {
 };
 
 const LogIn = () => {
+  let navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState(false);
+
+  const validateEmail = (e) => {
+    var email = e.target.value;
+
+    if (validator.isEmail(email)) {
+      setEmailError(true);
+      setEmail(email);
+    } else {
+      setEmailError(false);
+    }
+  };
+
+  const handleLogin = () => {
+    if (emailError && password === "123") {
+      navigate("/admin/dashboard");
+    }
+  };
   return (
     <LoginContainer>
       <LogInWrapper>
@@ -47,11 +71,16 @@ const LogIn = () => {
         </div>
         <Container fluid>
           <Row>
-            <Col sm>
+            <Col sm style={{ flexDirection: "column" }}>
               <TextField
+                error={emailError ? false : true}
+                helperText={emailError ? " " : "incorrect email"}
+                type={"email"}
                 label="Email"
                 placeholder="Enter Your Email"
                 style={style}
+                onChange={(e) => validateEmail(e)}
+                size="small"
               />
             </Col>
           </Row>
@@ -59,9 +88,13 @@ const LogIn = () => {
           <Row>
             <Col sm>
               <TextField
+                type={"password"}
                 label="Password"
                 placeholder="Please Enter Your Password"
                 style={style}
+                size="small"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Col>
           </Row>
@@ -71,6 +104,9 @@ const LogIn = () => {
                 type={"normal textnormal"}
                 width={"130px"}
                 height={"40px"}
+                onClick={() => {
+                  handleLogin();
+                }}
               >
                 Login
               </CustomButton>

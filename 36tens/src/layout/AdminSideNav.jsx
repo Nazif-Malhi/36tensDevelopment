@@ -5,6 +5,7 @@ import { IoIosPeople } from "react-icons/io";
 import { AiOutlineUserSwitch, AiFillFileText } from "react-icons/ai";
 import { MdOutlineDashboard } from "react-icons/md";
 import { BsFiles } from "react-icons/bs";
+import { NavLink } from "react-router-dom";
 
 const SideNavComponent = styled.div`
   width: 60px;
@@ -40,24 +41,35 @@ const AdminSideNav = () => {
   return (
     <SideNavComponent>
       <br />
-      <div className="circle">
-        <MdOutlineDashboard style={{ style }} />
-      </div>
-      <div className="circle">
-        <BsFiles style={{ style }} />
-      </div>
-      <div className="circle">
-        <RiEditBoxLine style={{ style }} />
-      </div>
-      <div className="circle">
-        <IoIosPeople style={{ style }} />
-      </div>
+      <NavLink to="dashboard">
+        <div className="circle">
+          <MdOutlineDashboard style={{ style }} />
+        </div>
+      </NavLink>
+      <NavLink to="survey">
+        <div className="circle">
+          <BsFiles style={{ style }} />
+        </div>
+      </NavLink>
+
+      <NavLink to="competencies">
+        <div className="circle">
+          <RiEditBoxLine style={{ style }} />
+        </div>
+      </NavLink>
+      <NavLink to="workforce">
+        <div className="circle">
+          <IoIosPeople style={{ style }} />
+        </div>
+      </NavLink>
       <div className="circle">
         <AiOutlineUserSwitch style={{ style }} />
       </div>
-      <div className="circle">
-        <AiFillFileText style={{ style }} />
-      </div>
+      <NavLink to="questionier">
+        <div className="circle">
+          <AiFillFileText style={{ style }} />
+        </div>
+      </NavLink>
     </SideNavComponent>
   );
 };

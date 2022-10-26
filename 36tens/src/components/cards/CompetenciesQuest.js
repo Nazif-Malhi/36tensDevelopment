@@ -9,7 +9,7 @@ import { display } from "@mui/system";
 import { competencies_questions } from "../../assets/Data/CompetenciesData";
 
 import CustomButton from "../Custombutton";
-import { BiChevronRight } from "react-icons/bi";
+import { BiChevronRight, BiChevronLeft } from "react-icons/bi";
 
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -33,7 +33,7 @@ const QuestionContainer = styled.div`
   }
   .wrapper_question {
     width: 80%;
-    height: 80%;
+    height: 70%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,6 +57,13 @@ const QuestionContainer = styled.div`
         outline: none;
       }
     }
+    .buttonWrapperdouble {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 80px;
+      width: 100%;
+    }
   }
 `;
 
@@ -78,44 +85,46 @@ const NewQuestion = () => {
     </>
   );
 };
-
 const ShowQuestion = ({ index, quest }) => {
   return (
     <>
-      <Col md={"auto"}>
-        <h4 style={{ color: "#6C6A6A", marginBottom: "30px" }}>
+      <Col md={"auto"} style={{ height: "80px" }}>
+        <h5 style={{ color: "#6C6A6A", marginBottom: "30px" }}>
           {competencies_questions[index].questions[quest]}
-        </h4>
+        </h5>
       </Col>
     </>
   );
 };
+
 const CompetenciesQuest = ({ type, index }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [progress, setProgress] = React.useState(0);
 
-  let initialprogress =
-    100 / competencies_questions[index].questions.length - 1;
-
   useEffect(() => {
     setQuestionIndex(0);
-    setProgress(initialprogress);
+    setProgress(
+      ((questionIndex + 1) / competencies_questions[index].questions.length) *
+        100
+    );
   }, [index]);
 
-  const handleClick = () => {
+  const handleNext = () => {
     if (
       type &&
       questionIndex < competencies_questions[index].questions.length - 1
-    )
+    ) {
       setQuestionIndex(questionIndex + 1);
-    let currentProgress =
-      (questionIndex * 100) / competencies_questions[index].questions.length -
-      1;
-    setProgress(
-      // 100 / competencies_questions[index].questions.length -
-      //   1 +
-      currentProgress + initialprogress
-    );
+      setProgress(
+        ((questionIndex + 1) / competencies_questions[index].questions.length) *
+          100
+      );
+    }
+  };
+  const handleBack = () => {
+    if (type && questionIndex > 0) {
+      setQuestionIndex(questionIndex - 1);
+    }
   };
   return (
     <QuestionContainer>
@@ -133,44 +142,58 @@ const CompetenciesQuest = ({ type, index }) => {
         <Row style={{ width: "100%", justifyContent: "center" }}>
           <Marking />
         </Row>
-        <Row style={{ alignItems: "flex-end" }}>
-          <CustomButton
-            type={"normal textnormal margin-top floatRight"}
-            width="120px"
-            height="40px"
-            onClick={() => handleClick()}
-          >
-            {type ? (
-              <>
-                Next <BiChevronRight style={{ fontSize: "1.5rem" }} />
-              </>
-            ) : (
-              "Add New"
-            )}
-          </CustomButton>
+        <Row style={{ width: "100%" }}>
+          <div className="buttonWrapperdouble">
+            <CustomButton
+              type={`normal textnormal margin-top floatRight ${
+                questionIndex > 0 ? null : "disabled"
+              }`}
+              width="120px"
+              height="40px"
+              onClick={() => handleBack()}
+            >
+              <BiChevronLeft style={{ fontSize: "1.5rem" }} /> Back
+            </CustomButton>
+            <CustomButton
+              type={"normal textnormal margin-top floatRight"}
+              width="120px"
+              height="40px"
+              onClick={() => handleNext()}
+            >
+              {type ? (
+                <>
+                  Next <BiChevronRight style={{ fontSize: "1.5rem" }} />
+                </>
+              ) : (
+                "Add New"
+              )}
+            </CustomButton>
+          </div>
         </Row>
       </div>
-      <Row style={{ width: "100%" }}>
-        <Col md={"auto"}>
-          <p style={{ margin: 0 }}>
-            <b>
-              {questionIndex + 1} of{" "}
-              {competencies_questions[index].questions.length}
-            </b>
-          </p>
-        </Col>
-        <Col
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Box sx={{ width: "100%" }}>
-            <LinearProgress variant="determinate" value={progress} />
-          </Box>
-        </Col>
-      </Row>
+      {type ? (
+        <Row style={{ width: "100%" }}>
+          <Col md={"auto"}>
+            <p style={{ margin: 0 }}>
+              <b>
+                {questionIndex + 1} of{" "}
+                {competencies_questions[index].questions.length}
+              </b>
+            </p>
+          </Col>
+          <Col
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress variant="determinate" value={progress} />
+            </Box>
+          </Col>
+        </Row>
+      ) : null}
     </QuestionContainer>
   );
 };

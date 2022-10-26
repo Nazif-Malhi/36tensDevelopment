@@ -130,7 +130,14 @@ const Competencies = () => {
       <Competenciescontainer>
         <Container style={{ height: "100%" }}>
           <Row style={{ height: "85%" }}>
-            <Col xs={6} md={4} style={{ padding: "0", height: "100%" }}>
+            <Col
+              xs={6}
+              md={4}
+              style={{
+                padding: "0",
+                height: "100%",
+              }}
+            >
               <div className="header">
                 <h2>Competencies</h2>
               </div>
@@ -163,7 +170,7 @@ const Competencies = () => {
                 type={"add"}
               />
             </Col>
-            <Col xs={12} md={8}>
+            <Col xs={16} md={8}>
               <div className="body">
                 <h5>CEO 360 Form</h5>
                 <CompetenciesQuest type={isShowQuestion} index={indexOfComp} />

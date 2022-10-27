@@ -27,7 +27,7 @@ const QuestionContainer = styled.div`
   .text {
     width: 100%;
     h5 {
-      margin-left: 15%;
+      margin-left: 11%;
       margin-top: 7%;
     }
   }
@@ -99,14 +99,9 @@ const ShowQuestion = ({ index, quest }) => {
 
 const CompetenciesQuest = ({ type, index }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [progress, setProgress] = React.useState(0);
 
   useEffect(() => {
     setQuestionIndex(0);
-    setProgress(
-      ((questionIndex + 1) / competencies_questions[index].questions.length) *
-        100
-    );
   }, [index]);
 
   const handleNext = () => {
@@ -115,10 +110,6 @@ const CompetenciesQuest = ({ type, index }) => {
       questionIndex < competencies_questions[index].questions.length - 1
     ) {
       setQuestionIndex(questionIndex + 1);
-      setProgress(
-        ((questionIndex + 1) / competencies_questions[index].questions.length) *
-          100
-      );
     }
   };
   const handleBack = () => {
@@ -129,7 +120,7 @@ const CompetenciesQuest = ({ type, index }) => {
   return (
     <QuestionContainer>
       <div className="text">
-        <h5>competencies</h5>
+        <h5>{competencies_questions[index].heading}</h5>
       </div>
       <div className="wrapper_question">
         <Row style={{ width: "100%" }}>
@@ -172,25 +163,14 @@ const CompetenciesQuest = ({ type, index }) => {
         </Row>
       </div>
       {type ? (
-        <Row style={{ width: "100%" }}>
+        <Row style={{ width: "100%", justifyContent: "right" }}>
           <Col md={"auto"}>
-            <p style={{ margin: 0 }}>
+            <p style={{ margin: "0px 50px" }}>
               <b>
                 {questionIndex + 1} of{" "}
                 {competencies_questions[index].questions.length}
               </b>
             </p>
-          </Col>
-          <Col
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Box sx={{ width: "100%" }}>
-              <LinearProgress variant="determinate" value={progress} />
-            </Box>
           </Col>
         </Row>
       ) : null}

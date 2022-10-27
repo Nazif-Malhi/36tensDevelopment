@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CustomButton from "../components/Custombutton";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -9,12 +9,13 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Table from "../components/table/Table";
 
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Modal from "react-bootstrap/Modal";
-import { Checkbox, TextField } from "@mui/material";
-
-import { AiOutlineUpload } from "react-icons/ai";
+import {
+  AppraiseeModal,
+  CreateSurveyModal,
+  UploadCsvModal,
+} from "../components/modals/surveyModals";
+import { SurveyCreation } from "../assets/Data/Database";
+import TableHeading from "../components/table/TableHeading";
 
 const SurveyContainer = styled.div`
   width: 100%;
@@ -25,7 +26,7 @@ const SurveyContainer = styled.div`
     justify-content: right;
     align-items: end;
     height: 60px;
-    width: 80%;
+    width: 90%;
   }
   .body {
     width: 100%;
@@ -49,242 +50,14 @@ const SurveyContainer = styled.div`
   }
 `;
 
-function AppraiseeModal(props) {
-  const [Designation, setDesignation] = useState("");
-
-  const handleDesignation = (event) => {
-    setDesignation(event.target.value);
-  };
-  return (
-    <Modal {...props} aria-labelledby="contained-modal-title-vcenter" size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Add New Employee
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="show-grid">
-        <Container>
-          <Row style={{ marginBottom: "10px" }}>
-            <Col xs={6} md={4}>
-              <TextField
-                id="outlined-name"
-                label="First Name"
-                size="small"
-                fullWidth
-              />
-            </Col>
-            <Col xs={6} md={4}>
-              <TextField
-                id="outlined-name"
-                label="Last Name"
-                size="small"
-                fullWidth
-              />
-            </Col>
-            <Col xs={6} md={4}>
-              <TextField
-                type="date"
-                id="outlined-name"
-                size="small"
-                fullWidth
-              />
-            </Col>
-          </Row>
-          <Row style={{ marginBottom: "10px" }}>
-            <Col xs={6} md={4}>
-              <TextField
-                id="outlined-name"
-                label="Department"
-                size="small"
-                fullWidth
-              />
-            </Col>
-            <Col xs={12} md={8}>
-              <TextField
-                id="outlined-name"
-                label="Email"
-                size="small"
-                fullWidth
-              />
-            </Col>
-          </Row>
-          <Row style={{ marginBottom: "10px" }}>
-            <Col>
-              <FormControl
-                sx={{ width: "100%" }}
-                size="small"
-                style={{ background: "white" }}
-              >
-                <Select
-                  value={Designation}
-                  onChange={handleDesignation}
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                >
-                  <MenuItem value="">
-                    <em>Designation</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-            </Col>
-          </Row>
-        </Container>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button
-          style={{ background: "white", border: "none", color: "black" }}
-          onClick={props.onHide}
-        >
-          Cancel
-        </Button>
-        <Button style={{ background: "#a600a0", border: "none" }}>Add</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
-
-function UploadCsvModal(props) {
-  const Upload = styled.div`
-    border-radius: 7px;
-    width: 100%;
-    height: 220px;
-    border: 2px dashed #a2abb6;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    flex-direction: column;
-    :hover {
-      border: 2px dashed #3b4f66;
-      color: #3b4f66;
-      h6 {
-        color: #3b4f66;
-      }
-    }
-    p {
-      color: #a2abb6;
-    }
-    h6 {
-      color: #a2abb6;
-    }
-  `;
-  return (
-    <Modal {...props} aria-labelledby="contained-modal-title-vcenter" size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Upload CSV</Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="show-grid">
-        <Container>
-          <p style={{ color: "#a2abb6" }}>File.csv/File.txt</p>
-          <Upload>
-            <AiOutlineUpload style={{ fontSize: "5.7rem", color: "a2abb6" }} />
-            <h6>Drag & Drop here</h6>
-          </Upload>
-          <Row style={{ textAlign: "right" }}>
-            <p style={{ color: "#a2abb6" }}>
-              Can't Import ? <a href="/needhelp">Need Help</a>
-            </p>
-          </Row>
-        </Container>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button
-          style={{ background: "white", border: "none", color: "black" }}
-          onClick={props.onHide}
-        >
-          Cancel
-        </Button>
-        <Button style={{ background: "#a600a0", border: "none" }}>
-          Create Survey
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
-
-function CreateSurveyModal(props) {
-  const [Category, setCategory] = useState("");
-
-  const handleCategory = (event) => {
-    setCategory(event.target.value);
-  };
-  return (
-    <Modal {...props} aria-labelledby="contained-modal-title-vcenter" size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Name Your Survey
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="show-grid">
-        <Container>
-          <Row style={{ marginBottom: "10px" }}>
-            <TextField
-              id="outlined-name"
-              label="Survey Name"
-              size="small"
-              fullWidth
-            />
-          </Row>
-          <Row>
-            <FormControl
-              sx={{ width: "100%" }}
-              size="small"
-              style={{ background: "white" }}
-            >
-              <Select
-                value={Category}
-                onChange={handleCategory}
-                displayEmpty
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                <MenuItem value="">
-                  <em>Category</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </Row>
-          <Row>
-            <Col md="auto">
-              <Checkbox defaultChecked color="secondary" />{" "}
-            </Col>
-            <Col
-              style={{
-                textAlign: "left",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <p style={{ padding: "0px", margin: "0px" }}>
-                I have imported appraisee
-              </p>
-            </Col>
-          </Row>
-        </Container>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button
-          style={{ background: "white", border: "none", color: "black" }}
-          onClick={props.onHide}
-        >
-          Cancel
-        </Button>
-        <Button style={{ background: "#a600a0", border: "none" }}>
-          Create Survey
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
 const Surveys = () => {
   const [recentlyUpdated, setRecentlyUpdated] = useState("");
   const [allTypes, setAllTypes] = useState("");
   const [active, setActive] = useState("");
+
+  const [dumyData, setDumyData] = useState([]);
+
+  // Modals
   const [appraiseeModal, setAppraiseeModal] = useState(false);
   const [uploadCSV_Modal, setUploadCSV_Modal] = useState(false);
   const [createSurvey_Modal, setSurvey_Modal] = useState(false);
@@ -298,13 +71,23 @@ const Surveys = () => {
   const handleActive = (event) => {
     setActive(event.target.value);
   };
+
+  // const create survey
+
+  const createSurveyMethod = (val) => {
+    SurveyCreation.push(val);
+  };
+
+  useEffect(() => {
+    setDumyData(SurveyCreation);
+  }, [createSurvey_Modal]);
   return (
     <>
       <SurveyContainer>
         <div className="header">
           <CustomButton
             type={"normal textnormal margin-right"}
-            width="220px"
+            width="200px"
             height="40px"
             onClick={() => setAppraiseeModal(true)}
           >
@@ -312,7 +95,7 @@ const Surveys = () => {
           </CustomButton>
           <CustomButton
             type={"normal textnormal"}
-            width="220px"
+            width="120px"
             height="40px"
             onClick={() => setUploadCSV_Modal(true)}
           >
@@ -321,7 +104,7 @@ const Surveys = () => {
         </div>
         <div className="body">
           <div className="surveyWrapper">
-            <h1>Surveys</h1>
+            <h1>Surveys Creation</h1>
             <div className="options">
               <Row>
                 <Col>
@@ -337,11 +120,9 @@ const Surveys = () => {
                       inputProps={{ "aria-label": "Without label" }}
                     >
                       <MenuItem value="">
-                        <em>Recently Updated</em>
+                        <em>Recently Created</em>
                       </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
+                      <MenuItem value={10}>Recently Updated</MenuItem>
                     </Select>
                   </FormControl>
                 </Col>
@@ -360,9 +141,8 @@ const Surveys = () => {
                       <MenuItem value="">
                         <em>All Types</em>
                       </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
+                      <MenuItem value={10}>Standard</MenuItem>
+                      <MenuItem value={20}>Custom</MenuItem>
                     </Select>
                   </FormControl>
                 </Col>
@@ -381,16 +161,23 @@ const Surveys = () => {
                       <MenuItem value="">
                         <em>Active</em>
                       </MenuItem>
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
+                      <MenuItem value={10}>Completed</MenuItem>
                     </Select>
                   </FormControl>
                 </Col>
               </Row>
             </div>
-            <Table />
+            <TableHeading
+              columnName={["Name", "Questions", "Responses", "Completion Rate"]}
+              action={true}
+            />
+            {dumyData.map((val, key) => {
+              return <Table name={val.name} quest={38} res={"10"} rate={80} />;
+            })}
+            {/* <Table /> */}
+
             <div className="border" />
+
             <CustomButton
               type={"normal textnormal margin-top floatRight"}
               width="220px"
@@ -402,6 +189,8 @@ const Surveys = () => {
           </div>
         </div>
       </SurveyContainer>
+
+      {/* Using Modals */}
       <AppraiseeModal
         show={appraiseeModal}
         onHide={() => setAppraiseeModal(false)}
@@ -413,6 +202,9 @@ const Surveys = () => {
       <CreateSurveyModal
         show={createSurvey_Modal}
         onHide={() => setSurvey_Modal(false)}
+        createSurveyMethod={(e) => {
+          createSurveyMethod(e);
+        }}
       />
     </>
   );

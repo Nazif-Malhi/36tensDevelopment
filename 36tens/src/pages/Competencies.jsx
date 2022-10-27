@@ -12,12 +12,21 @@ import { competencies_questions } from "../assets/Data/CompetenciesData";
 const Competenciescontainer = styled.div`
   width: 100%;
   height: 100%;
+  align-items: center;
+  justify-content: center;
+
+  .containerWrapper {
+    width: 95%;
+    height: 100%;
+    display: flex;
+    margin: 0px 20px;
+  }
 
   .header {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 30px;
+    margin: 30px 0px;
     h2 {
       color: #979797;
     }
@@ -128,8 +137,9 @@ const Competencies = () => {
   return (
     <>
       <Competenciescontainer>
-        <Container style={{ height: "100%" }}>
-          <Row style={{ height: "85%" }}>
+        <div className="containerWrapper">
+          {/* <Container style={{ height: "100%" }}> */}
+          <Row style={{ height: "85%", width: "100%" }}>
             <Col
               xs={6}
               md={4}
@@ -170,19 +180,19 @@ const Competencies = () => {
                 type={"add"}
               />
             </Col>
-            <Col xs={16} md={8}>
+            <Col>
               <div className="body">
-                <h5>CEO 360 Form</h5>
                 <CompetenciesQuest type={isShowQuestion} index={indexOfComp} />
               </div>
             </Col>
           </Row>
-        </Container>
-        <CreateCompetencyModal
-          show={createCompetency_Modal}
-          onHide={() => setCompetency_Modal(false)}
-          onCreate={(e) => addCompetency(e)}
-        />
+          {/* </Container> */}
+          <CreateCompetencyModal
+            show={createCompetency_Modal}
+            onHide={() => setCompetency_Modal(false)}
+            onCreate={(e) => addCompetency(e)}
+          />
+        </div>
       </Competenciescontainer>
     </>
   );

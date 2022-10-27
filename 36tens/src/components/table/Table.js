@@ -1,23 +1,17 @@
 import React from "react";
 import TableBody from "./TableBody";
-import TableHeading from "./TableHeading";
 
-const Table = () => {
+const Table = ({ name, quest, res, rate }) => {
+  var date = Date(Date.now());
   return (
-    <React.Fragment>
-      <TableHeading
-        columnName={["Name", "Questions", "Responses", "Completion Rate"]}
-        action={true}
-      />
-      <TableBody
-        color="black"
-        name="New Sample Survey"
-        des="25 August 2022 03:00 PM"
-        questions={"20"}
-        response={"4"}
-        rate={"10"}
-      />
-    </React.Fragment>
+    <TableBody
+      color={rate === 100 ? "#9c27b0" : "black"}
+      name={name}
+      des={date}
+      questions={quest}
+      response={res}
+      rate={rate}
+    />
   );
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { RiEditBoxLine } from "react-icons/ri";
 import { IoIosPeople } from "react-icons/io";
@@ -15,61 +15,97 @@ const SideNavComponent = styled.div`
   align-items: center;
   display: flex;
   position: fixed;
-  .circle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background-color: white;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    color: #80858e;
-    margin: 5px;
-    font-size: 1.2rem;
+  .isActive {
+    background: #9c27b0;
+    color: white;
     :hover {
-      background: #232340;
+      background: #9c27b0;
       color: white;
     }
   }
 `;
+
+const Circle = styled(NavLink)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  color: #80858e;
+  margin: 5px;
+  font-size: 1.2rem;
+  :hover {
+    background: #232340;
+    color: white;
+  }
+`;
 const AdminSideNav = () => {
-  const style = {
-    fontSize: "1rem",
+  const [isActive, setActive] = useState("");
+  const handleIsActive = (val) => {
+    setActive(val);
   };
+  const style = {};
   return (
     <SideNavComponent>
       <br />
-      <NavLink to="dashboard">
-        <div className="circle">
-          <MdOutlineDashboard style={{ style }} />
-        </div>
-      </NavLink>
-      <NavLink to="survey">
-        <div className="circle">
-          <BsFiles style={{ style }} />
-        </div>
-      </NavLink>
 
-      <NavLink to="competencies">
-        <div className="circle">
-          <RiEditBoxLine style={{ style }} />
-        </div>
-      </NavLink>
-      <NavLink to="workforce">
-        <div className="circle">
-          <IoIosPeople style={{ style }} />
-        </div>
-      </NavLink>
-      <div className="circle">
+      <Circle
+        to="dashboard"
+        className={isActive === "dashboard" ? "isActive" : ""}
+        onClick={() => {
+          handleIsActive("dashboard");
+        }}
+      >
+        <MdOutlineDashboard style={style} />
+      </Circle>
+
+      <Circle
+        to="workforce"
+        className={isActive === "workforce" ? "isActive" : ""}
+        onClick={() => {
+          handleIsActive("workforce");
+        }}
+      >
+        <IoIosPeople style={{ style }} />
+      </Circle>
+
+      <Circle
+        to="survey"
+        className={isActive === "survey" ? "isActive" : ""}
+        onClick={() => {
+          handleIsActive("survey");
+        }}
+      >
+        <BsFiles style={{ style }} />
+      </Circle>
+
+      <Circle
+        to="competencies"
+        className={isActive === "competencies" ? "isActive" : ""}
+        onClick={() => {
+          handleIsActive("competencies");
+        }}
+      >
+        <RiEditBoxLine style={{ style }} />
+      </Circle>
+
+      <Circle>
         <AiOutlineUserSwitch style={{ style }} />
-      </div>
-      <NavLink to="questionier">
-        <div className="circle">
-          <AiFillFileText style={{ style }} />
-        </div>
-      </NavLink>
+      </Circle>
+
+      <Circle
+        to="questionier"
+        className={isActive === "questionier" ? "isActive" : ""}
+        onClick={() => {
+          handleIsActive("questionier");
+        }}
+      >
+        <AiFillFileText style={{ style }} />
+      </Circle>
     </SideNavComponent>
   );
 };

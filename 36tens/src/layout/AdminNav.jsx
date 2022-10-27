@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { BsPersonFill } from "react-icons/bs";
 import { IoIosNotifications } from "react-icons/io";
 import { Logo } from "../assets/images";
-import { Nav, NavMenu, NavLink } from "../components/navbar/navelements";
+import {
+  Nav,
+  NavMenu,
+  NavLink,
+  NavBtnLink,
+} from "../components/navbar/navelements";
 import { MdOutlineCancel } from "react-icons/md";
 
 const Navbar = styled.div`
@@ -93,7 +98,7 @@ const AdminNav = () => {
         <img className="logo" src={Logo} alt="logo" />
         <Nav>
           <NavMenu>
-            <AltNavLink to="/services">About Us</AltNavLink>
+            <AltNavLink to="/">About Us</AltNavLink>
             <AltNavLink to="/contact-us">Contact Us</AltNavLink>
           </NavMenu>
         </Nav>
@@ -107,7 +112,7 @@ const AdminNav = () => {
             <p>Jan Doe</p>
           </div>
         </div>
-        <div className="notification">
+        {/* <div className="notification">
           <div className="circle">
             <NotificationsIcon
               style={{ fontSize: "1.5rem", color: "#C3CAD9" }}
@@ -116,7 +121,7 @@ const AdminNav = () => {
           <div className="circle">
             <MdOutlineCancel style={{ fontSize: "1.5rem", color: "#C3CAD9" }} />
           </div>
-        </div>
+        </div> */}
       </div>
     </Navbar>
   );

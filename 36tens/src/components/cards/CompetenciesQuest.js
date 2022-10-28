@@ -7,12 +7,11 @@ import { Row, Col } from "react-bootstrap";
 import Marking from "./Marking";
 import { display } from "@mui/system";
 import { competencies_questions } from "../../assets/Data/CompetenciesData";
-
 import CustomButton from "../Custombutton";
 import { BiChevronRight, BiChevronLeft } from "react-icons/bi";
-
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
+import { MdOutlineDone } from "react-icons/md";
 
 const QuestionContainer = styled.div`
   width: 100%;
@@ -173,7 +172,19 @@ const CompetenciesQuest = ({ type, index }) => {
             </p>
           </Col>
         </Row>
-      ) : null}
+      ) : (
+        <Row style={{ width: "100%", justifyContent: "right" }}>
+          <Col md={"auto"}>
+            <CustomButton
+              type={"normal textnormal margin-top floatRight"}
+              width="120px"
+              height="40px"
+            >
+              Done <MdOutlineDone style={{ fontSize: "1.5rem" }} />
+            </CustomButton>
+          </Col>
+        </Row>
+      )}
     </QuestionContainer>
   );
 };

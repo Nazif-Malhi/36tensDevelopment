@@ -59,9 +59,9 @@ const LogIn = () => {
   };
 
   const handleLogin = () => {
-    if (emailError && password === "123") {
-      navigate("/admin/dashboard");
-    }
+    // if (emailError && password === "123") {
+    navigate("/admin/dashboard");
+    // }
   };
   return (
     <LoginContainer>

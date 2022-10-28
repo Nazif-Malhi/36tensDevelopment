@@ -7,6 +7,11 @@ import CustomButton from "../components/Custombutton";
 import CustomDataTable from "../components/DataTable/CustomDataTable";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
+import {
+  AppraiseeModal,
+  UploadCsvModal,
+} from "../components/modals/surveyModals";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const ActionContainer = styled.div`
   display: flex;
@@ -147,16 +152,23 @@ const handleDelete = (id) => {
 const WorkforceContainer = styled.div`
   width: 100%;
   height: 100%;
+  .header {
+    display: flex;
+    justify-content: right;
+    align-items: end;
+    height: 60px;
+    width: 90%;
+  }
   .body {
     width: 100%;
-    height: calc(100% - 60px);
     display: flex;
+    height: calc(100% - 60px);
     justify-content: center;
     align-items: center;
     flex-direction: column;
     .workforcewrapper {
       width: 80%;
-      height: calc(100% - 60px);
+
       .options {
         width: 60%;
       }
@@ -167,6 +179,10 @@ const Workforce = () => {
   const [search, setSearch] = useState("");
   const [filterResults, setFilterResults] = useState(rows);
 
+  // Modals
+  const [appraiseeModal, setAppraiseeModal] = useState(false);
+  const [uploadCSV_Modal, setUploadCSV_Modal] = useState(false);
+
   const filter = () => {
     const result = rows.filter((list) => {
       return list.Name.toLowerCase().match(search.toLowerCase());
@@ -175,10 +191,40 @@ const Workforce = () => {
   };
   return (
     <WorkforceContainer>
+      <div className="header">
+        <Row style={{ width: "100%", height: "100%" }}>
+          <Col style={{ alignItems: "center", display: "flex" }}>
+            <h1 style={{ margin: "0", marginLeft: "100px" }}>Workforce</h1>
+          </Col>
+          <Col
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+            }}
+          >
+            <CustomButton
+              type={"normal textnormal margin-right"}
+              width="200px"
+              height="40px"
+              onClick={() => setAppraiseeModal(true)}
+            >
+              <AiOutlinePlus /> Add New Employee
+            </CustomButton>
+            <CustomButton
+              type={"normal textnormal"}
+              width="120px"
+              height="40px"
+              onClick={() => setUploadCSV_Modal(true)}
+            >
+              <AiOutlinePlus /> Bulk Add
+            </CustomButton>
+          </Col>
+        </Row>
+      </div>
       <div className="body">
         <div className="workforcewrapper">
-          <h1>Workforce</h1>
-          <Row>
+          <Row style={{ marginBottom: "20px" }}>
             <Col xs={6} md={4}>
               <InputContact
                 placeholder={`Search`}
@@ -203,6 +249,14 @@ const Workforce = () => {
           <CustomDataTable column={columns} row={filterResults} />
         </div>
       </div>
+      <AppraiseeModal
+        show={appraiseeModal}
+        onHide={() => setAppraiseeModal(false)}
+      />
+      <UploadCsvModal
+        show={uploadCSV_Modal}
+        onHide={() => setUploadCSV_Modal(false)}
+      />
     </WorkforceContainer>
   );
 };

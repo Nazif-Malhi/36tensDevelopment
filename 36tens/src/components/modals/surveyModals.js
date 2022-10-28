@@ -10,8 +10,11 @@ import { AiOutlineUpload } from "react-icons/ai";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
 import { Row, Col } from "react-bootstrap";
+
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import {
   newEmployeeDepartment,
@@ -27,6 +30,8 @@ export function AppraiseeModal(props) {
   const [department, setDepartment] = useState("");
   const [email, setEmail] = useState("");
   const [designation, setDesignation] = useState("");
+  const [group, setGroup] = useState("");
+  const [phone, setPhone] = useState("");
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" size="lg">
       <Modal.Header closeButton>
@@ -37,7 +42,7 @@ export function AppraiseeModal(props) {
       <Modal.Body className="show-grid">
         <Container>
           <Row style={{ marginBottom: "10px" }}>
-            <Col xs={6} md={4}>
+            <Col xs={8} md={6}>
               <TextField
                 id="outlined-name"
                 label="First Name"
@@ -49,7 +54,7 @@ export function AppraiseeModal(props) {
                 fullWidth
               />
             </Col>
-            <Col xs={6} md={4}>
+            <Col xs={8} md={6}>
               <TextField
                 id="outlined-name"
                 label="Last Name"
@@ -61,21 +66,27 @@ export function AppraiseeModal(props) {
                 }}
               />
             </Col>
-            <Col xs={6} md={4}>
-              <TextField
-                type="date"
-                id="outlined-name"
-                size="small"
-                fullWidth
-                value={date}
-                onChange={(e) => {
-                  setDate(e.target.value);
-                }}
-              />
-            </Col>
           </Row>
           <Row style={{ marginBottom: "10px" }}>
-            <Col xs={6} md={4}>
+            <Col xs={8} md={6}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Date of Joining"
+                  value={date}
+                  onChange={(e) => {
+                    setDate(e);
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      size="small"
+                      style={{ width: "100%" }}
+                    />
+                  )}
+                />
+              </LocalizationProvider>
+            </Col>
+            <Col xs={8} md={6}>
               <FormControl
                 sx={{ width: "100%" }}
                 size="small"
@@ -102,7 +113,9 @@ export function AppraiseeModal(props) {
                 </Select>
               </FormControl>
             </Col>
-            <Col xs={12} md={8}>
+          </Row>
+          <Row style={{ marginBottom: "10px" }}>
+            <Col xs={8} md={6}>
               <TextField
                 id="outlined-name"
                 label="Email"
@@ -114,9 +127,7 @@ export function AppraiseeModal(props) {
                 }}
               />
             </Col>
-          </Row>
-          <Row style={{ marginBottom: "10px" }}>
-            <Col>
+            <Col xs={8} md={6}>
               <FormControl
                 sx={{ width: "100%" }}
                 size="small"
@@ -134,6 +145,47 @@ export function AppraiseeModal(props) {
                     <em>Designation</em>
                   </MenuItem>
                   {newEmployeeDesignation.map((val, index) => {
+                    return (
+                      <MenuItem id={index} value={val.val}>
+                        {val.des}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "10px" }}>
+            <Col xs={8} md={6}>
+              <TextField
+                id="outlined-name"
+                label="Phone Number"
+                size="small"
+                fullWidth
+                value={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                }}
+              />
+            </Col>
+            <Col xs={8} md={6}>
+              <FormControl
+                sx={{ width: "100%" }}
+                size="small"
+                style={{ background: "white" }}
+              >
+                <Select
+                  value={group}
+                  onChange={(e) => {
+                    setGroup(e.target.value);
+                  }}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>Group</em>
+                  </MenuItem>
+                  {newEmployeeDepartment.map((val, index) => {
                     return (
                       <MenuItem id={index} value={val.val}>
                         {val.des}
@@ -221,26 +273,23 @@ export function UploadCsvModal(props) {
 export function CreateSurveyModal(props) {
   const [surveyName, setSurveyName] = useState("");
 
-  const [category, setCategory] = useState("");
-  const [relation, setRelation] = useState("");
-  const [appraisee, setAppraisee] = useState("");
+  const [type, setType] = useState("");
+  const [position, setPosition] = useState("");
 
   const navigate = useNavigate();
 
   const handleCreation = () => {
     const dumyData = {
       name: surveyName,
-      category: category,
-      relation: relation,
-      appraisee: appraisee,
+      type: type,
+      position: position,
     };
 
     setSurveyName("");
-    setCategory("");
-    setRelation("");
-    setAppraisee("");
+    setType("");
+    setPosition("");
     props.onHide();
-    navigate("/admin/competencies");
+    // navigate("/admin/competencies");
     return dumyData;
   };
 
@@ -271,21 +320,19 @@ export function CreateSurveyModal(props) {
                 style={{ background: "white" }}
               >
                 <Select
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
                   displayEmpty
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem value="">
                     <em>Category</em>
                   </MenuItem>
-                  <MenuItem value={10}>Standard</MenuItem>
-                  <MenuItem value={20}>Custom</MenuItem>
+                  <MenuItem value={10}>Individual</MenuItem>
+                  <MenuItem value={20}>Group</MenuItem>
                 </Select>
               </FormControl>
             </Col>
-          </Row>
-          <Row style={{ marginBottom: "10px" }}>
             <Col>
               <FormControl
                 sx={{ width: "100%" }}
@@ -293,20 +340,25 @@ export function CreateSurveyModal(props) {
                 style={{ background: "white" }}
               >
                 <Select
-                  value={relation}
-                  onChange={(e) => setRelation(e.target.value)}
+                  value={position}
+                  onChange={(e) => setPosition(e.target.value)}
                   displayEmpty
                   inputProps={{ "aria-label": "Without label" }}
                 >
                   <MenuItem value="">
-                    <em>Relationships</em>
+                    <em>Position's</em>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value={10}>Sr. Developer</MenuItem>
+                  <MenuItem value={20}>Finance Manager</MenuItem>
+                  <MenuItem value={30}>IT Manager</MenuItem>
+                  <MenuItem value={30}>Chief Operating Officer</MenuItem>
                 </Select>
               </FormControl>
             </Col>
+          </Row>
+
+          {/* <Row style={{ marginBottom: "10px" }}>
+           
             <Col>
               <FormControl
                 sx={{ width: "100%" }}
@@ -328,7 +380,7 @@ export function CreateSurveyModal(props) {
                 </Select>
               </FormControl>
             </Col>
-          </Row>
+          </Row> */}
 
           {/* <Row>
               <Col md="auto">

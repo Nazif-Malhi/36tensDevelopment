@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CustomButton from "../components/Custombutton";
-import { AiOutlinePlus } from "react-icons/ai";
 import { Row, Col } from "react-bootstrap";
 
 import MenuItem from "@mui/material/MenuItem";
@@ -9,13 +8,10 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Table from "../components/table/Table";
 
-import {
-  AppraiseeModal,
-  CreateSurveyModal,
-  UploadCsvModal,
-} from "../components/modals/surveyModals";
+import { CreateSurveyModal } from "../components/modals/surveyModals";
 import { SurveyCreation } from "../assets/Data/Database";
 import TableHeading from "../components/table/TableHeading";
+import Pagination from "react-custom-pagination";
 
 const SurveyContainer = styled.div`
   width: 100%;
@@ -57,10 +53,13 @@ const Surveys = () => {
 
   const [dumyData, setDumyData] = useState([]);
 
-  // Modals
-  const [appraiseeModal, setAppraiseeModal] = useState(false);
-  const [uploadCSV_Modal, setUploadCSV_Modal] = useState(false);
   const [createSurvey_Modal, setSurvey_Modal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(3);
+
+  const paginate = (number) => {
+    setCurrentPage(number);
+  };
 
   const handleRecentlyUpdated = (event) => {
     setRecentlyUpdated(event.target.value);
@@ -85,22 +84,24 @@ const Surveys = () => {
     <>
       <SurveyContainer>
         <div className="header">
-          <CustomButton
-            type={"normal textnormal margin-right"}
-            width="200px"
-            height="40px"
-            onClick={() => setAppraiseeModal(true)}
-          >
-            <AiOutlinePlus /> Add New Appraisee
-          </CustomButton>
-          <CustomButton
-            type={"normal textnormal"}
-            width="120px"
-            height="40px"
-            onClick={() => setUploadCSV_Modal(true)}
-          >
-            <AiOutlinePlus /> Bulk Add
-          </CustomButton>
+          <Row>
+            <Col
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
+              <CustomButton
+                type={"normal textnormal margin-top floatRight"}
+                width="220px"
+                height="40px"
+                onClick={() => setSurvey_Modal(true)}
+              >
+                Create New Survey
+              </CustomButton>
+            </Col>
+          </Row>
         </div>
         <div className="body">
           <div className="surveyWrapper">
@@ -174,31 +175,26 @@ const Surveys = () => {
             {dumyData.map((val, key) => {
               return <Table name={val.name} quest={38} res={"10"} rate={80} />;
             })}
+            <div style={{ width: "500px" }}>
+              <Pagination
+                totalPosts={dumyData.length}
+                postsPerPage={postsPerPage}
+                paginate={paginate}
+                view={5}
+                showLast={true}
+                showFirst={true}
+                showIndex={true}
+              />
+            </div>
             {/* <Table /> */}
 
             <div className="border" />
-
-            <CustomButton
-              type={"normal textnormal margin-top floatRight"}
-              width="220px"
-              height="40px"
-              onClick={() => setSurvey_Modal(true)}
-            >
-              Create New Survey
-            </CustomButton>
           </div>
         </div>
       </SurveyContainer>
 
       {/* Using Modals */}
-      <AppraiseeModal
-        show={appraiseeModal}
-        onHide={() => setAppraiseeModal(false)}
-      />
-      <UploadCsvModal
-        show={uploadCSV_Modal}
-        onHide={() => setUploadCSV_Modal(false)}
-      />
+
       <CreateSurveyModal
         show={createSurvey_Modal}
         onHide={() => setSurvey_Modal(false)}

@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Table from "../components/table/Table";
 
-import { CreateSurveyModal } from "../components/modals/surveyModals";
+import { CreateSurveyModal } from "../components/modals/workforceModals";
 import { SurveyCreation } from "../assets/Data/Database";
 import TableHeading from "../components/table/TableHeading";
 

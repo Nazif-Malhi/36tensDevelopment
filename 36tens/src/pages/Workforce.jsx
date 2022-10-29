@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import { InputContact } from "../components/input";
@@ -10,8 +10,10 @@ import { MdDelete } from "react-icons/md";
 import {
   AppraiseeModal,
   UploadCsvModal,
-} from "../components/modals/surveyModals";
+} from "../components/modals/workforceModals";
 import { AiOutlinePlus } from "react-icons/ai";
+
+import { rows as databaseRow } from "../assets/Data/Database";
 
 const ActionContainer = styled.div`
   display: flex;
@@ -38,121 +40,6 @@ const ActionContainer = styled.div`
       rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
   }
 `;
-const Edit = ({ onClickHandle }) => {
-  return (
-    <ActionContainer onClick={() => onClickHandle()}>
-      <div className="iconwrapper">
-        <CiEdit color="black" fontSize={"1.5rem"} />
-      </div>
-    </ActionContainer>
-  );
-};
-const Delete = ({ onClickHandle }) => {
-  return (
-    <ActionContainer onClick={() => onClickHandle()}>
-      <div className="iconwrapper">
-        <MdDelete color="red" fontSize={"1.5rem"} />
-      </div>
-    </ActionContainer>
-  );
-};
-
-const rows = [
-  {
-    Name: "Neil",
-    Email: "Neil@fifthtought.com",
-    Phone: "032-1332-0999",
-    Tag: "Administrator",
-  },
-  {
-    Name: "Neil",
-    Email: "Neil@fifthtought.com",
-    Phone: "032-1332-0999",
-    Tag: "Administrator",
-  },
-  {
-    Name: "Neil",
-    Email: "Neil@fifthtought.com",
-    Phone: "032-1332-0999",
-    Tag: "Administrator",
-  },
-  {
-    Name: "Amstrong",
-    Email: "Neil@fifthtought.com",
-    Phone: "032-1332-0999",
-    Tag: "Administrator",
-  },
-  {
-    Name: "Ali",
-    Email: "Neil@fifthtought.com",
-    Phone: "032-1332-0999",
-    Tag: "Administrator",
-  },
-  {
-    Name: "Haider",
-    Email: "Neil@fifthtought.com",
-    Phone: "032-1332-0999",
-    Tag: "Administrator",
-  },
-  {
-    Name: "Neil",
-    Email: "Neil@fifthtought.com",
-    Phone: "032-1332-0999",
-    Tag: "Administrator",
-  },
-  {
-    Name: "Neil",
-    Email: "Neil@fifthtought.com",
-    Phone: "032-1332-0999",
-    Tag: "Administrator",
-  },
-  {
-    Name: "Neil",
-    Email: "Neil@fifthtought.com",
-    Phone: "032-1332-0999",
-    Tag: "Administrator",
-  },
-];
-
-const columns = [
-  {
-    name: "Name",
-    selector: (row) => row.Name,
-    sortable: true,
-  },
-  {
-    name: "Email",
-    selector: (row) => row.Email,
-    center: true,
-  },
-  {
-    name: "Phone",
-    selector: (row) => row.Phone,
-    center: true,
-  },
-  {
-    name: "Tag",
-    selector: (row) => row.Tag,
-    center: true,
-  },
-  {
-    name: "Actions",
-    cell: (row) => (
-      <div style={{ display: "flex" }}>
-        <Edit onClickHandle={() => handleEdit(row.Name)} />
-        <Delete onClickHandle={() => handleDelete(row.Name)} />
-      </div>
-    ),
-    center: true,
-  },
-];
-
-const handleEdit = (id) => {
-  alert("Edit " + id);
-};
-const handleDelete = (id) => {
-  alert("Delete: " + id);
-};
 const WorkforceContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -180,19 +67,91 @@ const WorkforceContainer = styled.div`
     }
   }
 `;
+
 const Workforce = () => {
+  const [rows, setRows] = useState(databaseRow);
   const [search, setSearch] = useState("");
   const [filterResults, setFilterResults] = useState(rows);
 
   // Modals
   const [appraiseeModal, setAppraiseeModal] = useState(false);
+  const [forEditRequestAppraisee, setEditRequestAppraisee] = useState(false);
   const [uploadCSV_Modal, setUploadCSV_Modal] = useState(false);
+
+  // id
+  const [appraisee, setAppraisee] = useState([]);
 
   const filter = () => {
     const result = rows.filter((list) => {
       return list.Name.toLowerCase().match(search.toLowerCase());
     });
     setFilterResults(result);
+  };
+
+  const columns = [
+    {
+      name: "ID",
+      selector: (row) => row.id,
+      omit: true,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.Name,
+      sortable: true,
+    },
+    {
+      name: "Email",
+      selector: (row) => row.Email,
+      center: true,
+    },
+    {
+      name: "Phone",
+      selector: (row) => row.Phone,
+      center: true,
+    },
+    {
+      name: "Tag",
+      selector: (row) => row.Tag,
+      center: true,
+    },
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div style={{ display: "flex" }}>
+          <Edit onClickHandle={() => handleEdit(row.id)} />
+          <Delete onClickHandle={() => handleDelete(row.id)} />
+        </div>
+      ),
+      center: true,
+    },
+  ];
+
+  const Edit = ({ onClickHandle }) => {
+    return (
+      <ActionContainer onClick={() => onClickHandle()}>
+        <div className="iconwrapper">
+          <CiEdit color="black" fontSize={"1.5rem"} />
+        </div>
+      </ActionContainer>
+    );
+  };
+  const Delete = ({ onClickHandle }) => {
+    return (
+      <ActionContainer onClick={() => onClickHandle()}>
+        <div className="iconwrapper">
+          <MdDelete color="red" fontSize={"1.5rem"} />
+        </div>
+      </ActionContainer>
+    );
+  };
+
+  const handleEdit = (id) => {
+    setAppraisee(id);
+    setEditRequestAppraisee(true);
+    setAppraiseeModal(true);
+  };
+  const handleDelete = (id) => {
+    alert("Delete: " + id);
   };
   return (
     <WorkforceContainer>
@@ -212,7 +171,10 @@ const Workforce = () => {
               type={"normal textnormal margin-right"}
               width="200px"
               height="40px"
-              onClick={() => setAppraiseeModal(true)}
+              onClick={() => {
+                setAppraiseeModal(true);
+                setEditRequestAppraisee(false);
+              }}
             >
               <AiOutlinePlus /> Add New Employee
             </CustomButton>
@@ -245,7 +207,6 @@ const Workforce = () => {
                 onClick={() => {
                   filter();
                 }}
-                // onClick={() => setUploadCSV_Modal(true)}
               >
                 <BiFilterAlt /> Filter
               </CustomButton>
@@ -257,6 +218,8 @@ const Workforce = () => {
       <AppraiseeModal
         show={appraiseeModal}
         onHide={() => setAppraiseeModal(false)}
+        edit={forEditRequestAppraisee}
+        appraisee={appraisee}
       />
       <UploadCsvModal
         show={uploadCSV_Modal}

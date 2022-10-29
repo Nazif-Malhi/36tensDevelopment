@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -22,6 +22,7 @@ import {
 } from "../../assets/Data/DropDownData";
 
 import { useNavigate } from "react-router-dom";
+import { rows } from "../../assets/Data/Database";
 
 export function AppraiseeModal(props) {
   const [firstName, setFirstName] = useState("");
@@ -32,6 +33,22 @@ export function AppraiseeModal(props) {
   const [designation, setDesignation] = useState("");
   const [group, setGroup] = useState("");
   const [phone, setPhone] = useState("");
+
+  useEffect(() => {
+    if (props.edit) {
+      let tempappraisee = props.appraisee;
+      setFirstName(rows[tempappraisee].Name);
+      setEmail(rows[tempappraisee].Email);
+      setPhone(rows[tempappraisee].Phone);
+      setDesignation(rows[tempappraisee].Tag);
+    } else {
+      setFirstName("");
+      setEmail("");
+      setPhone("");
+      setDesignation("");
+    }
+  });
+
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" size="lg">
       <Modal.Header closeButton>

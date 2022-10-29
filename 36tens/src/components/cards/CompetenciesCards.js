@@ -4,6 +4,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
 import { Row, Col } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
+import { Checkbox } from "@mui/material";
 
 const Wrapper = styled.div`
   margin-top: 10px;
@@ -27,17 +28,13 @@ const Wrapper = styled.div`
   }
 `;
 const CompetenciesCards = ({ title, question, handleClick, type, index }) => {
-  return (
-    <Accordion
-      onClick={handleClick}
-      style={{ marginBottom: "5px" }}
-      key={index}
-    >
-      <Accordion.Item>
+  return title !== "Create new competency" ? (
+    <Accordion onClick={handleClick} style={{ margin: "5px 0px" }} key={index}>
+      <Accordion.Item eventKey={index}>
         <Accordion.Header>
           <Row style={{ width: "100%" }}>
             <Col>
-              <h5>{title}</h5>
+              <h6>{title}</h6>
             </Col>
             <Col md={"auto"}>
               {type === "add" ? (
@@ -52,17 +49,33 @@ const CompetenciesCards = ({ title, question, handleClick, type, index }) => {
           {question?.map((val, index) => {
             return (
               <Row key={index}>
-                <p key={index}>{val}</p>
+                <Col style={{ cursor: "pointer" }}>
+                  <p>{val}</p>
+                </Col>
+                <Col md={"auto"}>
+                  <Checkbox defaultChecked color="secondary" />
+                </Col>
               </Row>
             );
           })}
-          {/* {console.log(question.length)} */}
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
-    // <Wrapper onClick={handleClick}>
-
-    // </Wrapper>
+  ) : (
+    <Wrapper onClick={handleClick}>
+      <Row style={{ width: "100%" }}>
+        <Col>
+          <h6>{title}</h6>
+        </Col>
+        <Col md={"auto"}>
+          {type === "add" ? (
+            <AiOutlinePlus style={{ fontSize: "1.5rem" }} />
+          ) : type === "del" ? (
+            <MdOutlineDelete style={{ fontSize: "1.5rem" }} />
+          ) : null}
+        </Col>
+      </Row>
+    </Wrapper>
   );
 };
 

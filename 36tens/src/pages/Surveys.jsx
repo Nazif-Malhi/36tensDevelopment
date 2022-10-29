@@ -11,7 +11,9 @@ import Table from "../components/table/Table";
 import { CreateSurveyModal } from "../components/modals/surveyModals";
 import { SurveyCreation } from "../assets/Data/Database";
 import TableHeading from "../components/table/TableHeading";
-import Pagination from "react-custom-pagination";
+
+import usePagination from "../components/Pagination";
+import Pagination from "@mui/material/Pagination";
 
 const SurveyContainer = styled.div`
   width: 100%;
@@ -26,15 +28,15 @@ const SurveyContainer = styled.div`
   }
   .body {
     width: 100%;
-    height: calc(100% - 60px);
     display: flex;
+    height: calc(100% - 60px);
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 
     .surveyWrapper {
       width: 80%;
-
-      height: calc(100% - 60px);
+      height: 100%;
       .options {
         width: 60%;
       }
@@ -54,12 +56,6 @@ const Surveys = () => {
   const [dumyData, setDumyData] = useState([]);
 
   const [createSurvey_Modal, setSurvey_Modal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(3);
-
-  const paginate = (number) => {
-    setCurrentPage(number);
-  };
 
   const handleRecentlyUpdated = (event) => {
     setRecentlyUpdated(event.target.value);
@@ -80,6 +76,18 @@ const Surveys = () => {
   useEffect(() => {
     setDumyData(SurveyCreation);
   }, [createSurvey_Modal]);
+
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 4;
+
+  const count = Math.ceil(dumyData.length / PER_PAGE);
+  const _DATA = usePagination(dumyData, PER_PAGE);
+
+  const handleChangePagination = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
+
   return (
     <>
       <SurveyContainer>
@@ -172,24 +180,23 @@ const Surveys = () => {
               columnName={["Name", "Questions", "Responses", "Completion Rate"]}
               action={true}
             />
-            {dumyData.map((val, key) => {
+            {_DATA.currentData().map((val, key) => {
               return <Table name={val.name} quest={38} res={"10"} rate={80} />;
             })}
-            <div style={{ width: "500px" }}>
-              <Pagination
-                totalPosts={dumyData.length}
-                postsPerPage={postsPerPage}
-                paginate={paginate}
-                view={5}
-                showLast={true}
-                showFirst={true}
-                showIndex={true}
-              />
-            </div>
+
             {/* <Table /> */}
 
             <div className="border" />
           </div>
+          <Pagination
+            count={count}
+            size="medium"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChangePagination}
+            style={{ marginBottom: "15px" }}
+          />
         </div>
       </SurveyContainer>
 

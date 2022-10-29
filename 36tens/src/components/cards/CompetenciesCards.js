@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
 import { Row, Col } from "react-bootstrap";
+import Accordion from "react-bootstrap/Accordion";
 
 const Wrapper = styled.div`
   margin-top: 10px;
@@ -25,22 +26,43 @@ const Wrapper = styled.div`
     margin: 0;
   }
 `;
-const CompetenciesCards = ({ title, handleClick, type }) => {
+const CompetenciesCards = ({ title, question, handleClick, type, index }) => {
   return (
-    <Wrapper onClick={handleClick}>
-      <Row style={{ width: "100%" }}>
-        <Col>
-          <h5>{title}</h5>
-        </Col>
-        <Col md={"auto"}>
-          {type === "add" ? (
-            <AiOutlinePlus style={{ fontSize: "1.5rem" }} />
-          ) : type === "del" ? (
-            <MdOutlineDelete style={{ fontSize: "1.5rem" }} />
-          ) : null}
-        </Col>
-      </Row>
-    </Wrapper>
+    <Accordion
+      onClick={handleClick}
+      style={{ marginBottom: "5px" }}
+      key={index}
+    >
+      <Accordion.Item>
+        <Accordion.Header>
+          <Row style={{ width: "100%" }}>
+            <Col>
+              <h5>{title}</h5>
+            </Col>
+            <Col md={"auto"}>
+              {type === "add" ? (
+                <AiOutlinePlus style={{ fontSize: "1.5rem" }} />
+              ) : type === "del" ? (
+                <MdOutlineDelete style={{ fontSize: "1.5rem" }} />
+              ) : null}
+            </Col>
+          </Row>
+        </Accordion.Header>
+        <Accordion.Body>
+          {question?.map((val, index) => {
+            return (
+              <Row key={index}>
+                <p key={index}>{val}</p>
+              </Row>
+            );
+          })}
+          {/* {console.log(question.length)} */}
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
+    // <Wrapper onClick={handleClick}>
+
+    // </Wrapper>
   );
 };
 

@@ -138,7 +138,6 @@ const Competencies = () => {
     <>
       <Competenciescontainer>
         <div className="containerWrapper">
-          {/* <Container style={{ height: "100%" }}> */}
           <Row style={{ height: "85%", width: "100%" }}>
             <Col
               xs={6}
@@ -156,7 +155,9 @@ const Competencies = () => {
                 {competencies_questions.map((value, index) => {
                   return (
                     <CompetenciesCards
+                      index={index}
                       title={value.heading}
+                      question={value.questions}
                       handleClick={() => showCompetenciesQuestion(index)}
                     />
                   );

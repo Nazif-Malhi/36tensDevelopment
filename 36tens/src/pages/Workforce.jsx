@@ -123,23 +123,27 @@ const columns = [
   {
     name: "Email",
     selector: (row) => row.Email,
+    center: true,
   },
   {
     name: "Phone",
     selector: (row) => row.Phone,
+    center: true,
   },
   {
     name: "Tag",
     selector: (row) => row.Tag,
+    center: true,
   },
   {
-    name: "Edit",
-    cell: (row) => <Edit onClickHandle={() => handleEdit(row.Name)} />,
-  },
-
-  {
-    name: "Delete",
-    cell: (row) => <Delete onClickHandle={() => handleDelete(row.Name)} />,
+    name: "Actions",
+    cell: (row) => (
+      <div style={{ display: "flex" }}>
+        <Edit onClickHandle={() => handleEdit(row.Name)} />
+        <Delete onClickHandle={() => handleDelete(row.Name)} />
+      </div>
+    ),
+    center: true,
   },
 ];
 
@@ -168,6 +172,7 @@ const WorkforceContainer = styled.div`
     flex-direction: column;
     .workforcewrapper {
       width: 80%;
+      height: 100%;
 
       .options {
         width: 60%;

@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Row, Col } from "react-bootstrap";
-import { Checkbox } from "@mui/material";
+// import { Checkbox } from "@mui/material";
 
 const MarkingContainer = styled.div`
-  width: 80%;
+  width: 60%;
   height: 20%;
   display: flex;
   justify-content: space-between;
@@ -12,7 +12,7 @@ const MarkingContainer = styled.div`
 `;
 
 const TextContainer = styled.div`
-  width: 90%;
+  width: 75%;
   height: 20%;
   display: flex;
   justify-content: space-between;
@@ -29,12 +29,12 @@ const Box = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  h4 {
+  h5 {
     margin: 5px;
   }
 `;
 const Text = styled.div`
-  width: 22%;
+  width: 28%;
   height: 100%;
   color: #6c6a6a;
   display: flex;
@@ -57,19 +57,19 @@ const Marking = () => {
           }}
         >
           <Box>
-            <h4>0</h4>
+            <h5>0</h5>
           </Box>
           <Box>
-            <h4>1</h4>
+            <h5>1</h5>
           </Box>
           <Box>
-            <h4>2</h4>
+            <h5>2</h5>
           </Box>
           <Box>
-            <h4>3</h4>
+            <h5>3</h5>
           </Box>
           <Box>
-            <h4>4</h4>
+            <h5>4</h5>
           </Box>
         </Row>
       </MarkingContainer>
@@ -91,7 +91,7 @@ const Marking = () => {
           </Text>
         </Row>
       </TextContainer>
-      <Row>
+      {/* <Row>
         <Col md="auto" style={{ display: "flex" }}>
           <Checkbox defaultChecked color="secondary" />{" "}
         </Col>
@@ -103,7 +103,7 @@ const Marking = () => {
         >
           <p style={{ margin: "0px", color: "#979797" }}>Must required</p>
         </Col>
-      </Row>
+      </Row> */}
     </>
   );
 };

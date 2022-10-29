@@ -8,6 +8,17 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { TextField } from "@mui/material";
 import { competencies_questions } from "../assets/Data/CompetenciesData";
+import { packageSelected } from "../assets/Data/Database";
+
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+
+import CustomButton from "../components/Custombutton";
+import { BiChevronRight, BiChevronLeft } from "react-icons/bi";
+import Assign from "../components/cards/Assign";
+import PreviewModal from "../components/modals/PreviewModal";
 
 const Competenciescontainer = styled.div`
   width: 100%;
@@ -30,6 +41,11 @@ const Competenciescontainer = styled.div`
     h2 {
       color: #979797;
     }
+  }
+  .stepheader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .competenciesBody {
     height: 70%;
@@ -60,11 +76,20 @@ const Competenciescontainer = styled.div`
   }
   .body {
     width: 100%;
-    height: 100%;
+    height: 90%;
     h5 {
       color: #979797;
     }
   }
+`;
+
+const MasterButtons = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 50px;
 `;
 
 function CreateCompetencyModal(props) {
@@ -110,28 +135,58 @@ function CreateCompetencyModal(props) {
   );
 }
 
+const steps = ["Build", "Assign", "Preview", "Done"];
+
 const Competencies = () => {
   const [createCompetency_Modal, setCompetency_Modal] = useState(false);
-  const [competencyName, setCompetencyName] = useState("");
-  const [compValues, setCompValues] = useState([]);
-  const [isShowQuestion, setShowQuestion] = useState(false);
+
+  // const [compValues, setCompValues] = useState([]);
+  const [isShowQuestion, setShowQuestion] = useState(true);
   const [indexOfComp, setIndexOfComp] = useState(0);
 
-  let addCompetency = (val) => {
-    setCompValues([...compValues, val]);
-    setCompetency_Modal(false);
-    setShowQuestion(false);
+  const [stepIndex, setStepIndex] = useState(0);
+
+  const [show, setShow] = useState(false);
+
+  const handleNext = () => {
+    if (stepIndex < 4) {
+      setStepIndex(stepIndex + 1);
+      if (stepIndex === 1) {
+        setShow(true);
+        setStepIndex(stepIndex + 2);
+      }
+    }
+  };
+  const handleBack = () => {
+    if (stepIndex > 0) {
+      setStepIndex(stepIndex - 1);
+      if (stepIndex === 4) {
+        setShow(true);
+        setStepIndex(stepIndex - 2);
+      }
+    }
   };
 
-  let removeCompetency = (index) => {
-    let temp = [...compValues];
-    temp.splice(index, 1);
-    setCompValues(temp);
-  };
+  // let addCompetency = (val) => {
+  //   setCompValues([...compValues, val]);
+  //   setCompetency_Modal(false);
+  //   setShowQuestion(false);
+  // };
+
+  // let removeCompetency = (index) => {
+  //   let temp = [...compValues];
+  //   temp.splice(index, 1);
+  //   setCompValues(temp);
+  // };
 
   let showCompetenciesQuestion = (index) => {
     setShowQuestion(true);
     setIndexOfComp(index);
+  };
+
+  const handleCloseModal = () => {
+    // setStepIndex(stepIndex + 1);
+    setShow(false);
   };
 
   return (
@@ -162,7 +217,8 @@ const Competencies = () => {
                     />
                   );
                 })}
-                {/* Dynamically Competencies */}
+
+                {/* Dynamically Competencies
                 {compValues.map((value, index) => {
                   return (
                     <CompetenciesCards
@@ -171,28 +227,82 @@ const Competencies = () => {
                       handleClick={() => removeCompetency(index)}
                     />
                   );
-                })}
+                })} */}
               </div>
-              <CompetenciesCards
-                title={"Create new competency"}
-                handleClick={() => {
-                  setCompetency_Modal(true);
-                }}
-                type={"add"}
-              />
+              {/* {packageSelected === "standard" ? null : (
+                <CompetenciesCards
+                  title={"Create new competency"}
+                  handleClick={() => {
+                    setCompetency_Modal(true);
+                  }}
+                  type={"add"}
+                />
+              )} */}
             </Col>
+
             <Col>
-              <div className="body">
-                <CompetenciesQuest type={isShowQuestion} index={indexOfComp} />
-              </div>
+              <Row>
+                <div className="stepheader">
+                  <Box sx={{ width: "100%", marginTop: "30px" }}>
+                    <Stepper activeStep={stepIndex} alternativeLabel>
+                      {steps.map((label) => (
+                        <Step key={label}>
+                          <StepLabel>{label}</StepLabel>
+                        </Step>
+                      ))}
+                    </Stepper>
+                  </Box>
+                </div>
+              </Row>
+              <Row>
+                <div className="body">
+                  {stepIndex === 0 ? (
+                    <CompetenciesQuest
+                      type={isShowQuestion}
+                      index={indexOfComp}
+                    />
+                  ) : stepIndex === 1 ? (
+                    <Assign />
+                  ) : null}
+                </div>
+                <Row style={{ width: "100%", justifyContent: "center" }}>
+                  <MasterButtons>
+                    <CustomButton
+                      type={`normal textnormal  ${
+                        stepIndex > 0 ? null : "disabled"
+                      }`}
+                      width="160px"
+                      height="40px"
+                      onClick={() => handleBack()}
+                    >
+                      <BiChevronLeft style={{ fontSize: "1.5rem" }} /> Previous
+                      Step
+                    </CustomButton>
+                    <CustomButton
+                      type={`normal textnormal  ${
+                        stepIndex < 4 ? null : "disabled"
+                      }`}
+                      width="140px"
+                      height="40px"
+                      onClick={() => handleNext()}
+                    >
+                      <>
+                        Next Step{" "}
+                        <BiChevronRight style={{ fontSize: "1.5rem" }} />
+                      </>
+                    </CustomButton>
+                  </MasterButtons>
+                </Row>
+              </Row>
             </Col>
           </Row>
           {/* </Container> */}
           <CreateCompetencyModal
             show={createCompetency_Modal}
             onHide={() => setCompetency_Modal(false)}
-            onCreate={(e) => addCompetency(e)}
+            // onCreate={(e) => addCompetency(e)}
           />
+          <PreviewModal show={show} onHide={() => handleCloseModal()} />
         </div>
       </Competenciescontainer>
     </>

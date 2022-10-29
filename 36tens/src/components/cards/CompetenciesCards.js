@@ -5,6 +5,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import { Row, Col } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import { Checkbox } from "@mui/material";
+import { packageSelected } from "../../assets/Data/Database";
 
 const Wrapper = styled.div`
   margin-top: 10px;
@@ -53,7 +54,11 @@ const CompetenciesCards = ({ title, question, handleClick, type, index }) => {
                   <p>{val}</p>
                 </Col>
                 <Col md={"auto"}>
-                  <Checkbox defaultChecked color="secondary" />
+                  <Checkbox
+                    defaultChecked
+                    color="secondary"
+                    disabled={packageSelected === "standard" ? true : false}
+                  />
                 </Col>
               </Row>
             );

@@ -1,4 +1,5 @@
 export const SurveyCreation = [];
+export const packageSelected = "standard";
 export const rows = [
   {
     id: 0,

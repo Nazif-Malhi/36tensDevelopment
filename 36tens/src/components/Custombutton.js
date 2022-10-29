@@ -43,6 +43,9 @@ const ButtonStyle = styled.div`
       background: #c3cad9;
     }
   }
+  .circle {
+    border-radius: 50%;
+  }
 `;
 
 const CustomButton = ({

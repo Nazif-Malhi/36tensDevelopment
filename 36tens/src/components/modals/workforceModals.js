@@ -47,7 +47,7 @@ export function AppraiseeModal(props) {
       setPhone("");
       setDesignation("");
     }
-  });
+  }, [props.edit, props.appraisee]);
 
   return (
     <Modal {...props} aria-labelledby="contained-modal-title-vcenter" size="lg">
@@ -306,7 +306,7 @@ export function CreateSurveyModal(props) {
     setType("");
     setPosition("");
     props.onHide();
-    // navigate("/admin/competencies");
+    navigate("/admin/competencies");
     return dumyData;
   };
 

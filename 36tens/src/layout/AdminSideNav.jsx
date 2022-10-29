@@ -83,7 +83,7 @@ const AdminSideNav = () => {
         <BsFiles style={{ style }} />
       </Circle>
 
-      <Circle
+      {/* <Circle
         to="competencies"
         className={isActive === "competencies" ? "isActive" : ""}
         onClick={() => {
@@ -91,7 +91,7 @@ const AdminSideNav = () => {
         }}
       >
         <RiEditBoxLine style={{ style }} />
-      </Circle>
+      </Circle> */}
 
       <Circle>
         <AiOutlineUserSwitch style={{ style }} />

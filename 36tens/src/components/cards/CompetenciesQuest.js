@@ -15,24 +15,25 @@ import { MdOutlineDone } from "react-icons/md";
 
 const QuestionContainer = styled.div`
   width: 100%;
-  height: 100%;
-  margin-top: 60px;
+  height: calc(80%);
+  margin-top: 20px;
   background: white;
   border-radius: 7px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   .text {
     width: 100%;
     h5 {
       margin-left: 11%;
-      margin-top: 7%;
+      margin-top: 35px;
     }
   }
   .wrapper_question {
     width: 80%;
-    height: 70%;
+    height: 65%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,11 +58,13 @@ const QuestionContainer = styled.div`
       }
     }
     .buttonWrapperdouble {
+      width: 90%;
+      margin-top: 20px;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
-      height: 80px;
-      width: 100%;
+      height: 50px;
+      width: 20%;
     }
   }
 `;
@@ -117,61 +120,68 @@ const CompetenciesQuest = ({ type, index }) => {
     }
   };
   return (
-    <QuestionContainer>
-      <div className="text">
-        <h5>{competencies_questions[index].heading}</h5>
-      </div>
-      <div className="wrapper_question">
-        <Row style={{ width: "100%" }}>
-          {type ? (
-            <ShowQuestion index={index} quest={questionIndex} />
-          ) : (
-            <NewQuestion />
-          )}
-        </Row>
-        <Row style={{ width: "100%", justifyContent: "center" }}>
-          <Marking />
-        </Row>
-        <Row style={{ width: "100%" }}>
-          <div className="buttonWrapperdouble">
-            <CustomButton
-              type={`normal textnormal margin-top floatRight ${
-                questionIndex > 0 ? null : "disabled"
-              }`}
-              width="120px"
-              height="40px"
-              onClick={() => handleBack()}
-            >
-              <BiChevronLeft style={{ fontSize: "1.5rem" }} /> Back
-            </CustomButton>
-            <CustomButton
-              type={"normal textnormal margin-top floatRight"}
-              width="120px"
-              height="40px"
-              onClick={() => handleNext()}
-            >
-              {type ? (
-                <>
-                  Next <BiChevronRight style={{ fontSize: "1.5rem" }} />
-                </>
-              ) : (
-                "Add New"
-              )}
-            </CustomButton>
-          </div>
-        </Row>
-      </div>
-      {type ? (
-        <Row style={{ width: "100%", justifyContent: "right" }}>
-          <Col md={"auto"}>
-            <p style={{ margin: "0px 50px" }}>
-              <b>
-                {questionIndex + 1} of{" "}
-                {competencies_questions[index].questions.length}
-              </b>
-            </p>
-          </Col>
-        </Row>
+    <>
+      <QuestionContainer>
+        <div className="text">
+          <h5>{competencies_questions[index].heading}</h5>
+        </div>
+        <div className="wrapper_question">
+          <Row style={{ width: "100%" }}>
+            {type ? (
+              <ShowQuestion index={index} quest={questionIndex} />
+            ) : (
+              <NewQuestion />
+            )}
+          </Row>
+          <Row style={{ width: "100%", justifyContent: "center" }}>
+            <Marking />
+          </Row>
+          <Row style={{ width: "100%", justifyContent: "center" }}>
+            <div className="buttonWrapperdouble">
+              <CustomButton
+                type={`normal textnormal circle ${
+                  questionIndex > 0 ? null : "disabled"
+                }`}
+                width="40px"
+                height="40px"
+                onClick={() => handleBack()}
+              >
+                <BiChevronLeft style={{ fontSize: "1.5rem" }} />
+              </CustomButton>
+              <CustomButton
+                type={`normal textnormal circle ${
+                  questionIndex <
+                  competencies_questions[index].questions.length - 1
+                    ? null
+                    : "disabled"
+                }`}
+                width="40px"
+                height="40px"
+                onClick={() => handleNext()}
+              >
+                {type ? (
+                  <>
+                    <BiChevronRight style={{ fontSize: "1.5rem" }} />
+                  </>
+                ) : (
+                  "Add New"
+                )}
+              </CustomButton>
+            </div>
+          </Row>
+          <Row style={{ width: "100%", justifyContent: "right" }}>
+            <Col md={"auto"}>
+              <p style={{ margin: "10px 0px" }}>
+                <b>
+                  {questionIndex + 1} of{" "}
+                  {competencies_questions[index].questions.length}
+                </b>
+              </p>
+            </Col>
+          </Row>
+        </div>
+        {/* {type ? (
+       
       ) : (
         <Row style={{ width: "100%", justifyContent: "right" }}>
           <Col md={"auto"}>
@@ -183,9 +193,10 @@ const CompetenciesQuest = ({ type, index }) => {
               Done <MdOutlineDone style={{ fontSize: "1.5rem" }} />
             </CustomButton>
           </Col>
-        </Row>
-      )}
-    </QuestionContainer>
+        </Row> 
+      )}*/}
+      </QuestionContainer>
+    </>
   );
 };
 

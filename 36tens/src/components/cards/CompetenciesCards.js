@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 `;
 const CompetenciesCards = ({ title, question, handleClick, type, index }) => {
   return title !== "Create new competency" ? (
-    <Accordion onClick={handleClick} style={{ margin: "5px 0px" }} key={index}>
+    <Accordion onClick={handleClick} style={{ margin: "5px 0px" }}>
       <Accordion.Item eventKey={index}>
         <Accordion.Header>
           <Row style={{ width: "100%" }}>

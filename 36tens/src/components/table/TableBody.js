@@ -4,6 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { Link, useNavigate } from "react-router-dom";
 
 const Body = styled.div`
   width: 100%;
@@ -42,6 +43,8 @@ const TextContainer = styled.div`
   margin-left: 10px;
 `;
 const TableBody = ({ color, name, des, questions, response, rate }) => {
+  const navigate = useNavigate();
+
   const [action, setAction] = useState("");
   const handleAction = (event) => {
     setAction(event.target.value);
@@ -82,8 +85,25 @@ const TableBody = ({ color, name, des, questions, response, rate }) => {
               <MenuItem value="">
                 <em>Action</em>
               </MenuItem>
-              <MenuItem value={10}>Update</MenuItem>
-              <MenuItem value={20}>Delete</MenuItem>
+              <MenuItem value={10}>
+                <Link
+                  to="/results"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  Results
+                </Link>
+              </MenuItem>
+              <MenuItem value={20}>
+                <Link
+                  to="/admin/competencies"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  Update
+                </Link>
+              </MenuItem>
+              <MenuItem value={30}>Delete</MenuItem>
             </Select>
           </FormControl>
         </Col>

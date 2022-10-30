@@ -9,6 +9,7 @@ import Workforce from "./Workforce";
 import Dashboard from "./Dashboard";
 import Competencies from "./Competencies";
 import Questionier from "./Questionier";
+import Results from "../layout/Results";
 
 const Master = () => {
   return (

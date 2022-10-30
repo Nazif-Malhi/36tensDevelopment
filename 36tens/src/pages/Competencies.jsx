@@ -19,6 +19,8 @@ import CustomButton from "../components/Custombutton";
 import { BiChevronRight, BiChevronLeft } from "react-icons/bi";
 import Assign from "../components/cards/Assign";
 import PreviewModal from "../components/modals/PreviewModal";
+import Done from "../components/cards/Done";
+import BuisnessImpactScale from "../components/cards/BuisnessImpactScale";
 
 const Competenciescontainer = styled.div`
   width: 100%;
@@ -135,7 +137,7 @@ function CreateCompetencyModal(props) {
   );
 }
 
-const steps = ["Build", "Assign", "Preview", "Done"];
+const steps = ["Build", "Assign", "Preview", "Impact Scale", "Done"];
 
 const Competencies = () => {
   const [createCompetency_Modal, setCompetency_Modal] = useState(false);
@@ -149,22 +151,29 @@ const Competencies = () => {
   const [show, setShow] = useState(false);
 
   const handleNext = () => {
-    if (stepIndex < 4) {
+    if (stepIndex < 5) {
       setStepIndex(stepIndex + 1);
       if (stepIndex === 1) {
         setShow(true);
         setStepIndex(stepIndex + 2);
+      } else if (stepIndex === 3) {
+        setShow(false);
       }
     }
+    console.log("next " + stepIndex);
   };
   const handleBack = () => {
     if (stepIndex > 0) {
       setStepIndex(stepIndex - 1);
-      if (stepIndex === 4) {
-        setShow(true);
+      if (stepIndex === 3) {
         setStepIndex(stepIndex - 2);
+        setShow(false);
+      } else if (stepIndex === 4) {
+        setStepIndex(stepIndex - 1);
+        setShow(true);
       }
     }
+    console.log("back " + stepIndex);
   };
 
   // let addCompetency = (val) => {
@@ -182,11 +191,6 @@ const Competencies = () => {
   let showCompetenciesQuestion = (index) => {
     setShowQuestion(true);
     setIndexOfComp(index);
-  };
-
-  const handleCloseModal = () => {
-    // setStepIndex(stepIndex + 1);
-    setShow(false);
   };
 
   return (
@@ -210,6 +214,7 @@ const Competencies = () => {
                 {competencies_questions.map((value, index) => {
                   return (
                     <CompetenciesCards
+                      key={index}
                       index={index}
                       title={value.heading}
                       question={value.questions}
@@ -263,6 +268,10 @@ const Competencies = () => {
                     />
                   ) : stepIndex === 1 ? (
                     <Assign />
+                  ) : stepIndex === 4 ? (
+                    <BuisnessImpactScale />
+                  ) : stepIndex === 5 ? (
+                    <Done />
                   ) : null}
                 </div>
                 <Row style={{ width: "100%", justifyContent: "center" }}>
@@ -302,7 +311,11 @@ const Competencies = () => {
             onHide={() => setCompetency_Modal(false)}
             // onCreate={(e) => addCompetency(e)}
           />
-          <PreviewModal show={show} onHide={() => handleCloseModal()} />
+          <PreviewModal
+            show={show}
+            onHide={() => handleBack()}
+            onProceed={() => handleNext()}
+          />
         </div>
       </Competenciescontainer>
     </>

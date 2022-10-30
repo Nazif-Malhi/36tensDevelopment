@@ -46,50 +46,63 @@ const Text = styled.div`
     margin: 5px;
   }
 `;
+export const Labeling = () => {
+  return (
+    <Row
+      style={{
+        width: "100%",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box>
+        <h5>0</h5>
+      </Box>
+      <Box>
+        <h5>1</h5>
+      </Box>
+      <Box>
+        <h5>2</h5>
+      </Box>
+      <Box>
+        <h5>3</h5>
+      </Box>
+      <Box>
+        <h5>4</h5>
+      </Box>
+    </Row>
+  );
+};
+export const LabelMarker = ({ bold }) => {
+  const style = {
+    fontSize: "1.1rem",
+  };
+  return (
+    <Row
+      style={{
+        width: "100%",
+        justifyContent: "space-between",
+      }}
+    >
+      <Text>
+        <p style={bold ? style : null}>Least Likely</p>
+      </Text>
+      <Text>
+        <p style={bold ? style : null}>Neutral</p>
+      </Text>
+      <Text>
+        <p style={bold ? style : null}>Most Likely</p>
+      </Text>
+    </Row>
+  );
+};
 const Marking = () => {
   return (
     <>
       <MarkingContainer>
-        <Row
-          style={{
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
-          <Box>
-            <h5>0</h5>
-          </Box>
-          <Box>
-            <h5>1</h5>
-          </Box>
-          <Box>
-            <h5>2</h5>
-          </Box>
-          <Box>
-            <h5>3</h5>
-          </Box>
-          <Box>
-            <h5>4</h5>
-          </Box>
-        </Row>
+        <Labeling />
       </MarkingContainer>
       <TextContainer>
-        <Row
-          style={{
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
-          <Text>
-            <p>Least Likely</p>
-          </Text>
-          <Text>
-            <p>Neutral</p>
-          </Text>
-          <Text>
-            <p>Most Likely</p>
-          </Text>
-        </Row>
+        <LabelMarker />
       </TextContainer>
       {/* <Row>
         <Col md="auto" style={{ display: "flex" }}>

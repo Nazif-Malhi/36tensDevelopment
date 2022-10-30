@@ -6,6 +6,7 @@ import SignUp from "./layout/Authentication/SignUp";
 import Forget from "./layout/Authentication/Forget";
 import Mockup from "./pages/Mockup";
 import Master from "./pages/Master";
+import Results from "./layout/Results";
 function App() {
   return (
     <>
@@ -17,6 +18,7 @@ function App() {
           <Route path="forget" element={<Forget />} />
         </Route>
         <Route path="/admin/*" element={<Master />} />
+        <Route path="results" element={<Results />} />
       </Routes>
     </>
   );

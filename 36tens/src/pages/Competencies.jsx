@@ -137,12 +137,12 @@ function CreateCompetencyModal(props) {
   );
 }
 
-const steps = ["Build", "Assign", "Preview", "Impact Scale", "Done"];
+const steps = ["Impact Scale", "Assign", "Preview", "Done"];
 
 const Competencies = () => {
   const [createCompetency_Modal, setCompetency_Modal] = useState(false);
 
-  // const [compValues, setCompValues] = useState([]);
+  const [compValues, setCompValues] = useState([]);
   const [isShowQuestion, setShowQuestion] = useState(true);
   const [indexOfComp, setIndexOfComp] = useState(0);
 
@@ -151,7 +151,7 @@ const Competencies = () => {
   const [show, setShow] = useState(false);
 
   const handleNext = () => {
-    if (stepIndex < 5) {
+    if (stepIndex < 4) {
       setStepIndex(stepIndex + 1);
       if (stepIndex === 1) {
         setShow(true);
@@ -176,17 +176,17 @@ const Competencies = () => {
     console.log("back " + stepIndex);
   };
 
-  // let addCompetency = (val) => {
-  //   setCompValues([...compValues, val]);
-  //   setCompetency_Modal(false);
-  //   setShowQuestion(false);
-  // };
+  let addCompetency = (val) => {
+    setCompValues([...compValues, val]);
+    setCompetency_Modal(false);
+    setShowQuestion(false);
+  };
 
-  // let removeCompetency = (index) => {
-  //   let temp = [...compValues];
-  //   temp.splice(index, 1);
-  //   setCompValues(temp);
-  // };
+  let removeCompetency = (index) => {
+    let temp = [...compValues];
+    temp.splice(index, 1);
+    setCompValues(temp);
+  };
 
   let showCompetenciesQuestion = (index) => {
     setShowQuestion(true);
@@ -223,18 +223,20 @@ const Competencies = () => {
                   );
                 })}
 
-                {/* Dynamically Competencies
-                {compValues.map((value, index) => {
-                  return (
-                    <CompetenciesCards
-                      title={value}
-                      type={"del"}
-                      handleClick={() => removeCompetency(index)}
-                    />
-                  );
-                })} */}
+                {/* Dynamically Competencies */}
+                {packageSelected === "standard"
+                  ? null
+                  : compValues.map((value, index) => {
+                      return (
+                        <CompetenciesCards
+                          title={value}
+                          type={"del"}
+                          handleClick={() => removeCompetency(index)}
+                        />
+                      );
+                    })}
               </div>
-              {/* {packageSelected === "standard" ? null : (
+              {packageSelected === "standard" ? null : (
                 <CompetenciesCards
                   title={"Create new competency"}
                   handleClick={() => {
@@ -242,7 +244,7 @@ const Competencies = () => {
                   }}
                   type={"add"}
                 />
-              )} */}
+              )}
             </Col>
 
             <Col>
@@ -262,17 +264,19 @@ const Competencies = () => {
               <Row>
                 <div className="body">
                   {stepIndex === 0 ? (
-                    <CompetenciesQuest
-                      type={isShowQuestion}
-                      index={indexOfComp}
-                    />
-                  ) : stepIndex === 1 ? (
+                    <BuisnessImpactScale />
+                  ) : // <CompetenciesQuest
+                  //   type={isShowQuestion}
+                  //   index={indexOfComp}
+                  // />
+                  stepIndex === 1 ? (
                     <Assign />
                   ) : stepIndex === 4 ? (
-                    <BuisnessImpactScale />
-                  ) : stepIndex === 5 ? (
+                    // <BuisnessImpactScale />
                     <Done />
-                  ) : null}
+                  ) : // ) : stepIndex === 5 ? (
+                  // <Done />
+                  null}
                 </div>
                 <Row style={{ width: "100%", justifyContent: "center" }}>
                   <MasterButtons>
@@ -309,7 +313,7 @@ const Competencies = () => {
           <CreateCompetencyModal
             show={createCompetency_Modal}
             onHide={() => setCompetency_Modal(false)}
-            // onCreate={(e) => addCompetency(e)}
+            onCreate={(e) => addCompetency(e)}
           />
           <PreviewModal
             show={show}

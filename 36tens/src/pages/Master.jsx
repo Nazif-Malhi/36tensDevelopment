@@ -10,6 +10,8 @@ import Dashboard from "./Dashboard";
 import Competencies from "./Competencies";
 import Questionier from "./Questionier";
 import Results from "../layout/Results";
+import Profile from "./Profile";
+import Feilds from "./Feilds";
 
 const Master = () => {
   return (
@@ -23,6 +25,8 @@ const Master = () => {
           <Route path="workforce" element={<Workforce />} />
           <Route path="competencies" element={<Competencies />} />
           <Route path="questionier" element={<Questionier />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="master" element={<Feilds />} />
         </Routes>
       </div>
     </div>

@@ -93,7 +93,13 @@ const AdminSideNav = () => {
         <RiEditBoxLine style={{ style }} />
       </Circle> */}
 
-      <Circle>
+      <Circle
+        to="master"
+        className={isActive === "master" ? "isActive" : ""}
+        onClick={() => {
+          handleIsActive("master");
+        }}
+      >
         <AiOutlineUserSwitch style={{ style }} />
       </Circle>
 

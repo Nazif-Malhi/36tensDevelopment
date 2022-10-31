@@ -10,6 +10,7 @@ import {
   NavBtnLink,
 } from "../components/navbar/navelements";
 import { MdOutlineCancel } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = styled.div`
   width: 100%;
@@ -92,6 +93,8 @@ const NotificationsIcon = styled(IoIosNotifications)`
 `;
 
 const AdminNav = () => {
+  const navigate = useNavigate();
+
   return (
     <Navbar>
       <div className="left">
@@ -104,7 +107,7 @@ const AdminNav = () => {
         </Nav>
       </div>
       <div className="right">
-        <div className="button">
+        <div className="button" onClick={() => navigate("profile")}>
           <div className="circle">
             <BsPersonFill />
           </div>

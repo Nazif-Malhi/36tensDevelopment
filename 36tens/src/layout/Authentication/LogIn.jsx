@@ -7,6 +7,8 @@ import { Logo } from "../../assets/images";
 import CustomButton from "../../components/Custombutton";
 import validator from "validator";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { setAuthToken } from "../../utils/authToken";
 
 const LoginContainer = styled.div`
   display: flex;
@@ -59,8 +61,23 @@ const LogIn = () => {
   };
 
   const handleLogin = () => {
+    const loginPayload = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post("http://207.148.69.16:8011/auth/token/", loginPayload)
+      .then((response) => {
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        console.log(token);
+        setAuthToken(token);
+        navigate("/admin/dashboard");
+      });
+
     // if (emailError && password === "123") {
-    navigate("/admin/dashboard");
+    //navigate("/admin/dashboard");
     // }
   };
   return (

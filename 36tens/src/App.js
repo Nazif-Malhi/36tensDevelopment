@@ -7,7 +7,13 @@ import Forget from "./layout/Authentication/Forget";
 import Mockup from "./pages/Mockup";
 import Master from "./pages/Master";
 import Results from "./layout/Results";
+import RouteGuard from "./ProtectedRoute/ProtectedRoute";
+import { setAuthToken } from "./utils/authToken";
 function App() {
+  const token = localStorage.getItem("token");
+  if (token) {
+    setAuthToken(token);
+  }
   return (
     <>
       <Routes>
@@ -17,8 +23,15 @@ function App() {
           <Route path="signup" element={<SignUp />} />
           <Route path="forget" element={<Forget />} />
         </Route>
-        <Route path="/admin/*" element={<Master />} />
-        <Route path="results" element={<Results />} />
+        <Route
+          path="/admin/*"
+          element={
+            <RouteGuard>
+              <Master />
+            </RouteGuard>
+          }
+        />
+        {/* <Route path="results" element={<Results />} /> */}
       </Routes>
     </>
   );

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -67,6 +68,28 @@ const ProfileContainer = styled.div`
 `;
 
 const Profile = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [branch, setBranch] = useState("");
+  const [role, setRole] = useState("");
+  const [profile, setProfile] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://207.148.69.16:8011/api/auth-user/").then((response) => {
+      setProfile(response.data);
+    });
+    setFirstName(profile.first_name);
+    setLastName(profile.last_name);
+    setEmail(profile.email);
+    setAddress(profile.address);
+    setPhone(profile.cell_phone);
+    setBranch(profile.branch);
+    setRole(profile.role);
+  });
+
   return (
     <ProfileContainer>
       <div className="container">
@@ -105,12 +128,31 @@ const Profile = () => {
                   </div>
                   <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div className="form-group">
-                      <label for="fullName">Full Name</label>
+                      <label for="firstName">First Name</label>
                       <input
                         type="text"
                         className="form-control"
-                        id="fullName"
-                        placeholder="Enter full name"
+                        id="firstName"
+                        placeholder="Enter first name"
+                        value={firstName}
+                        onChange={(e) => {
+                          setFirstName(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div className="form-group">
+                      <label for="lastName">Last Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="lastName"
+                        placeholder="Enter last name"
+                        value={lastName}
+                        onChange={(e) => {
+                          setLastName(e.target.value);
+                        }}
                       />
                     </div>
                   </div>
@@ -122,6 +164,10 @@ const Profile = () => {
                         className="form-control"
                         id="eMail"
                         placeholder="Enter email ID"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
                       />
                     </div>
                   </div>
@@ -133,24 +179,17 @@ const Profile = () => {
                         className="form-control"
                         id="phone"
                         placeholder="Enter phone number"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="website">Website URL</label>
-                      <input
-                        type="url"
-                        className="form-control"
-                        id="website"
-                        placeholder="Website url"
+                        value={phone}
+                        onChange={(e) => {
+                          setPhone(e.target.value);
+                        }}
                       />
                     </div>
                   </div>
                 </div>
                 <div className="row gutters">
                   <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 className="mt-3 mb-2 text-primary">Address</h6>
+                    <h6 className="mt-3 mb-2 text-primary">Other</h6>
                   </div>
                   <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div className="form-group">
@@ -160,39 +199,51 @@ const Profile = () => {
                         className="form-control"
                         id="Street"
                         placeholder="Enter Street"
+                        value={address}
+                        onChange={(e) => {
+                          setAddress(e.target.value);
+                        }}
                       />
                     </div>
                   </div>
                   <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div className="form-group">
-                      <label for="ciTy">City</label>
+                      <label for="branch">Branch</label>
                       <input
                         type="name"
                         className="form-control"
-                        id="ciTy"
+                        id="branch"
+                        placeholder="Enter Branch"
+                        value={branch}
+                        onChange={(e) => {
+                          setBranch(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div className="form-group">
+                      <label for="role">Role</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="role"
+                        placeholder="Enter Role"
+                        value={role}
+                        onChange={(e) => {
+                          setRole(e.target.value);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div className="form-group">
+                      <label for="city">City</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="city"
                         placeholder="Enter City"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="sTate">State</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="sTate"
-                        placeholder="Enter State"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="zIp">Zip Code</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="zIp"
-                        placeholder="Zip Code"
                       />
                     </div>
                   </div>
@@ -213,6 +264,7 @@ const Profile = () => {
                         id="submit"
                         name="submit"
                         className="btn btn-primary margin"
+                        // onClick={console.log(profile)}
                       >
                         Update
                       </button>

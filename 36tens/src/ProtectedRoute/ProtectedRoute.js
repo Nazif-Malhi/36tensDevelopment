@@ -1,10 +1,17 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
-const ProtectedRoute = ({ isAuth, children }) => {
-  if (!isAuth) {
-    return <Navigate to="/admin" />;
+import { Route, Navigate, Routes } from "react-router-dom";
+
+const RouteGuard = ({ children }) => {
+  function hasJWT() {
+    let flag = false;
+
+    //check user has JWT token
+    localStorage.getItem("token") ? (flag = true) : (flag = false);
+
+    return flag;
   }
-  return <Outlet />;
+
+  return hasJWT() ? children : <Navigate to="/authentication/login" />;
 };
 
-export default ProtectedRoute;
+export default RouteGuard;

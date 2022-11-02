@@ -139,6 +139,9 @@ function CreateCompetencyModal(props) {
 
 const steps = ["Impact Scale", "Assign", "Preview", "Done"];
 
+
+
+
 const Competencies = () => {
   const [createCompetency_Modal, setCompetency_Modal] = useState(false);
 
@@ -207,9 +210,12 @@ const Competencies = () => {
               }}
             >
               <div className="header">
-                <h2>Competencies</h2>
+                <h2>Competencies </h2>
               </div>
+               
+              
               <div className="competenciesBody">
+                
                 {/* Competencies */}
                 {competencies_questions.map((value, index) => {
                   return (
@@ -236,7 +242,8 @@ const Competencies = () => {
                       );
                     })}
               </div>
-              {packageSelected === "standard" ? null : (
+              <div>
+                {packageSelected === "standard" ? null : (
                 <CompetenciesCards
                   title={"Create new competency"}
                   handleClick={() => {
@@ -245,6 +252,8 @@ const Competencies = () => {
                   type={"add"}
                 />
               )}
+              </div>
+              
             </Col>
 
             <Col>

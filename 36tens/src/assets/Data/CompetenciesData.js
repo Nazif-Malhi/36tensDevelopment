@@ -1,6 +1,7 @@
 export const competencies_questions = [
   {
     heading: "Empowerment",
+
     questions: [
       "Empowers others to carry on tasks / responsibilities",
       "Is empowered by leadership to lead the department",

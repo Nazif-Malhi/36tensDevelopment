@@ -9,7 +9,6 @@ export const competencies_data = [
                     "Acts in accordance and within policy framework",
                     "Is aware of the boundaries of her/his expertise, position and authority"
                 ]
-            }
-        
+            },
     }
 ]

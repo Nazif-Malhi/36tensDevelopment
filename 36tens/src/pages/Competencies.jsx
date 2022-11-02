@@ -21,6 +21,7 @@ import Assign from "../components/cards/Assign";
 import PreviewModal from "../components/modals/PreviewModal";
 import Done from "../components/cards/Done";
 import BuisnessImpactScale from "../components/cards/BuisnessImpactScale";
+import { competencies_data } from "../assets/Data/OrdinalCompetencies";
 
 const Competenciescontainer = styled.div`
   width: 100%;
@@ -196,6 +197,7 @@ const Competencies = () => {
     setIndexOfComp(index);
   };
 
+  console.log(competencies_data);
   return (
     <>
       <Competenciescontainer>
@@ -217,16 +219,18 @@ const Competencies = () => {
               <div className="competenciesBody">
                 
                 {/* Competencies */}
-                {competencies_questions.map((value, index) => {
-                  return (
-                    <CompetenciesCards
-                      key={index}
-                      index={index}
-                      title={value.heading}
-                      question={value.questions}
-                      handleClick={() => showCompetenciesQuestion(index)}
-                    />
-                  );
+                {competencies_data.map((value, index) => {
+                  value.competencies.map((val, ind) => {
+                    return (
+                      <CompetenciesCards
+                        key={index}
+                        index={index}
+                        title={stepIndex === 0 ? value.competency_type : val.competency_name}
+                        question={value.questions}
+                        handleClick={() => showCompetenciesQuestion(index)}
+                      />
+                    );
+                  })
                 })}
 
                 {/* Dynamically Competencies */}

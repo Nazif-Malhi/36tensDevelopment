@@ -154,6 +154,9 @@ const Competencies = () => {
 
   const [show, setShow] = useState(false);
 
+
+  const [competencies, setCompetencies] = useState({});
+
   const handleNext = () => {
     if (stepIndex < 4) {
       setStepIndex(stepIndex + 1);
@@ -197,7 +200,6 @@ const Competencies = () => {
     setIndexOfComp(index);
   };
 
-  console.log(competencies_data);
   return (
     <>
       <Competenciescontainer>
@@ -220,17 +222,35 @@ const Competencies = () => {
                 
                 {/* Competencies */}
                 {competencies_data.map((value, index) => {
-                  value.competencies.map((val, ind) => {
+
+                  
+                  
+                return(
+                  stepIndex === 0 ?  <CompetenciesCards
+                  key={index}
+                  index={index}
+                  // title={stepIndex === 0 ? value.competency_type : val.competency_name}
+                  title={value.competency_type}
+                  // question={value.questions}
+                  handleClick={() => showCompetenciesQuestion(index)}
+                /> :
+                  value.competencies.map((val, id) => {
                     return (
                       <CompetenciesCards
                         key={index}
                         index={index}
-                        title={stepIndex === 0 ? value.competency_type : val.competency_name}
-                        question={value.questions}
+                        // title={stepIndex === 0 ? value.competency_type : val.competency_name}
+                        title={val.competency_name}
+                        // question={value.questions}
                         handleClick={() => showCompetenciesQuestion(index)}
                       />
-                    );
+                    );  
+                    
                   })
+                )
+                  // value.competencies[index].map((val, ind) => {
+                    
+                  // })
                 })}
 
                 {/* Dynamically Competencies */}

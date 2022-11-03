@@ -28,30 +28,40 @@ const Wrapper = styled.div`
     margin: 0;
   }
 `;
+const RemoveIconHeader = styled(Accordion.Header)`
+  .accordian-button {
+    content: none;
+  }
+`;
 const CompetenciesCards = ({ title, question, handleClick, type, index }) => {
-  return title !== "Create new competency" ? (
-    <Accordion onClick={handleClick} style={{ margin: "5px 0px" }}>
-      <Accordion.Item eventKey={index}>
-        <Accordion.Header>
+  return (
+    //  title !== "Create new competency" ?
+    <Accordion
+      onClick={handleClick}
+      style={{ margin: "5px 0px" }}
+      defaultActiveKey={["0"]}
+    >
+      <Accordion.Item eventKey={index.toString()}>
+        <RemoveIconHeader>
           <Row style={{ width: "100%" }}>
             <Col>
               <h6>{title}</h6>
             </Col>
             <Col md={"auto"}>
-              {type === "add" ? (
+              {/* {type === "add" ? (
                 <AiOutlinePlus style={{ fontSize: "1.5rem" }} />
               ) : type === "del" ? (
                 <MdOutlineDelete style={{ fontSize: "1.5rem" }} />
-              ) : null}
+              ) : null} */}
             </Col>
           </Row>
-        </Accordion.Header>
+        </RemoveIconHeader>
         <Accordion.Body>
           {question?.map((val, index) => {
             return (
               <Row key={index}>
                 <Col style={{ cursor: "pointer" }}>
-                  <p>{val}</p>
+                  <p>{val.competency_name}</p>
                 </Col>
                 <Col md={"auto"}>
                   <Checkbox
@@ -66,22 +76,22 @@ const CompetenciesCards = ({ title, question, handleClick, type, index }) => {
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
-  ) : (
-    <Wrapper onClick={handleClick}>
-      <Row style={{ width: "100%" }}>
-        <Col>
-          <h6>{title}</h6>
-        </Col>
-        <Col md={"auto"}>
-          {type === "add" ? (
-            <AiOutlinePlus style={{ fontSize: "1.5rem" }} />
-          ) : type === "del" ? (
-            <MdOutlineDelete style={{ fontSize: "1.5rem" }} />
-          ) : null}
-        </Col>
-      </Row>
-    </Wrapper>
   );
+  // ) : (
+  //   <Wrapper onClick={handleClick}>
+  //     <Row style={{ width: "100%" }}>
+  //       <Col>
+  //         <h6>{title}</h6>
+  //       </Col>
+  //       <Col md={"auto"}>
+  //         {type === "add" ? (
+  //           <AiOutlinePlus style={{ fontSize: "1.5rem" }} />
+  //         ) : type === "del" ? (
+  //           <MdOutlineDelete style={{ fontSize: "1.5rem" }} />
+  //         ) : null}
+  //       </Col>
+  //     </Row>
+  //   </Wrapper>
 };
 
 export default CompetenciesCards;

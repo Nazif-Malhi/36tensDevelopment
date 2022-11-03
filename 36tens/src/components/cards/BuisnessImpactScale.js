@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { competencies_data } from "../../assets/Data/OrdinalCompetencies";
 
 const marks = [
   {
@@ -26,7 +27,7 @@ function valuetext(value) {
 
 const BuisnessImpactScaleContainer = styled.div`
   width: 100%;
-  height: 332px;
+  height: 390px;
   margin-top: 20px;
   background: white;
   border-radius: 7px;
@@ -37,7 +38,7 @@ const BuisnessImpactScaleContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   .scale_wrapper {
     height: 90%;
-    width: 80%;
+    width: 90%;
     h3 {
       color: #979797;
     }
@@ -59,18 +60,123 @@ const BuisnessImpactScaleContainer = styled.div`
   //   );
     border: none;
   }
+  .scrollContainer{
+    
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:150px;
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    margin-top:10px;
+  }
 `;
 
-const BuisnessImpactScale = () => {
+const BuisnessImpactScale = ({ index }) => {
   return (
     <BuisnessImpactScaleContainer>
       <div className="scale_wrapper">
         <Container>
-          <Row style={{ marginBottom: "5px" }}>
-            <h3>Buisness Impact Scale</h3>
+          <Row style={{ textAlign: "center" }}>
+            <h3>{competencies_data[index].competency_type}</h3>
           </Row>
-          <Row>
-            <Col></Col>
+          <Row style={{ justifyContent: "center" }}>
+            <Row style={{ width: "80%", marginTop: "10px" }}>
+              <Col style={{ textAlign: "left", padding: "0px" }}>
+                <p>Operational</p>
+              </Col>
+              <Col style={{ textAlign: "center" }}>
+                <p>Financial</p>
+              </Col>
+              <Col style={{ textAlign: "right", padding: "0px" }}>
+                <p>Strategic</p>
+              </Col>
+            </Row>
+            <Row style={{ width: "70%", marginTop: "10px" }}>
+              <Slider
+                aria-label="Custom marks"
+                defaultValue={50}
+                getAriaValueText={valuetext}
+                step={50}
+                size={"small"}
+                style={{ padding: "0px 0px" }}
+              />
+            </Row>
+          </Row>
+          {/* <Row style={{ marginTop: "20px" }}>
+            <Col>
+              <h4>Competencies</h4>
+            </Col>
+            <Col>
+              <Row style={{ margin: "0px 20px" }}>
+                <Col style={{ textAlign: "left", padding: "0px" }}>
+                  <p>Basic</p>
+                </Col>
+                <Col style={{ textAlign: "left" }}>
+                  <p>Intermediate</p>
+                </Col>
+                <Col style={{ textAlign: "center", padding: "0px" }}>
+                  <p>Advance</p>
+                </Col>
+                <Col style={{ textAlign: "right", padding: "0px" }}>
+                  <p>Expert</p>
+                </Col>
+              </Row>
+            </Col>
+          </Row> */}
+          <Row style={{ marginTop: "20px" }}>
+            <Col>
+              <h4>Competencies</h4>
+            </Col>
+            <Col>
+              <Row>
+                <Col>
+                  <p>Basic</p>
+                </Col>
+                <Col>
+                  <p>Intermediate</p>
+                </Col>
+                <Col>
+                  <p>Advance</p>
+                </Col>
+                <Col>
+                  <p>Expert</p>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <div className="scrollContainer">
+            {competencies_data[index].competencies.map((val, id) => {
+              return (
+                <Row key={id}>
+                  <Col>
+                    <h6>{val.competency_name}</h6>
+                  </Col>
+                  <Col>
+                    <Row>
+                      <Col style={{ textAlign: "center" }}>
+                        <Form.Check type="radio" aria-label="radio 1" />
+                      </Col>
+                      <Col style={{ textAlign: "center" }}>
+                        <Form.Check type="radio" aria-label="radio 1" />
+                      </Col>
+                      <Col style={{ textAlign: "center" }}>
+                        <Form.Check type="radio" aria-label="radio 1" />
+                      </Col>
+                      <Col style={{ textAlign: "center" }}>
+                        <Form.Check type="radio" aria-label="radio 1" />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              );
+            })}
+          </div>
+
+          {/* <Row style={{ marginBottom: "5px" }}>
+            <Col>
+              <h3>{competencies_data[index].competency_type}</h3>
+            </Col>
             <Col>
               <Row>
                 <Col style={{ textAlign: "left", padding: "0px" }}>
@@ -83,129 +189,170 @@ const BuisnessImpactScale = () => {
                   <p>Strategic</p>
                 </Col>
               </Row>
+              <Row>
+                <Col
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Box sx={{ width: 240 }}>
+                    <Slider
+                      aria-label="Custom marks"
+                      defaultValue={50}
+                      getAriaValueText={valuetext}
+                      step={50}
+                    />
+                  </Box>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <h4>Competencies</h4>
+            </Col>
+            <Col>
+              <Row style={{ width: "400px" }}>
+                <Col style={{ textAlign: "left", padding: "0px" }}>
+                  <p>Almost Never</p>
+                </Col>
+                <Col style={{ textAlign: "left" }}>
+                  <p>Not Very Often</p>
+                </Col>
+                <Col style={{ textAlign: "center", padding: "0px" }}>
+                  <p>Sometimes</p>
+                </Col>
+                <Col style={{ textAlign: "right", padding: "0px" }}>
+                  <p>Mostly</p>
+                </Col>
+                <Col style={{ textAlign: "right", padding: "0px" }}>
+                  <p>Never Always</p>
+                </Col>
+              </Row>
             </Col>
           </Row>
 
-          <Row>
-            <Col>
-              <h5>Personal Focus </h5>
-            </Col>
-            <Col
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Box sx={{ width: 240 }}>
-                <Slider
-                  aria-label="Custom marks"
-                  defaultValue={50}
-                  getAriaValueText={valuetext}
-                  step={50}
-                />
-              </Box>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h5>Value Focus </h5>
-            </Col>
-            <Col
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Box sx={{ width: 240 }}>
-                <Slider
-                  aria-label="Custom marks"
-                  defaultValue={50}
-                  getAriaValueText={valuetext}
-                  step={50}
-                />
-              </Box>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h5>Relationship Focus </h5>
-            </Col>
-            <Col
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Box sx={{ width: 240 }}>
-                <Slider
-                  aria-label="Custom marks"
-                  defaultValue={50}
-                  getAriaValueText={valuetext}
-                  step={50}
-                />
-              </Box>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h5>Success Focus </h5>
-            </Col>
-            <Col
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Box sx={{ width: 240 }}>
-                <Slider
-                  aria-label="Custom marks"
-                  defaultValue={50}
-                  getAriaValueText={valuetext}
-                  step={50}
-                />
-              </Box>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h5>Stategic Focus </h5>
-            </Col>
-            <Col
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Box sx={{ width: 240 }}>
-                <Slider
-                  aria-label="Custom marks"
-                  defaultValue={50}
-                  getAriaValueText={valuetext}
-                  step={50}
-                />
-              </Box>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <h5>Leader Focus </h5>
-            </Col>
-            <Col
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Box sx={{ width: 240 }}>
-                <Slider
-                  aria-label="Custom marks"
-                  defaultValue={50}
-                  getAriaValueText={valuetext}
-                  step={50}
-                />
-              </Box>
-            </Col>
-          </Row>
+          <div className="scrollContainer">
+            {competencies_data[index].competencies.map((val, id) => {
+              return (
+                <Row key={id}>
+                  <Col>
+                    <h6>{val.competency_name}</h6>
+                  </Col>
+                  <Col
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Box sx={{ width: 360 }}></Box>
+                  </Col>
+                </Row>
+              );
+            })} */}
+
+          {/* <Row>
+              <Col>
+                <h5>Value Focus </h5>
+              </Col>
+              <Col
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Box sx={{ width: 240 }}>
+                  <Slider
+                    aria-label="Custom marks"
+                    defaultValue={50}
+                    getAriaValueText={valuetext}
+                    step={50}
+                  />
+                </Box>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h5>Relationship Focus </h5>
+              </Col>
+              <Col
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Box sx={{ width: 240 }}>
+                  <Slider
+                    aria-label="Custom marks"
+                    defaultValue={50}
+                    getAriaValueText={valuetext}
+                    step={50}
+                  />
+                </Box>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h5>Success Focus </h5>
+              </Col>
+              <Col
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Box sx={{ width: 240 }}>
+                  <Slider
+                    aria-label="Custom marks"
+                    defaultValue={50}
+                    getAriaValueText={valuetext}
+                    step={50}
+                  />
+                </Box>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h5>Stategic Focus </h5>
+              </Col>
+              <Col
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Box sx={{ width: 240 }}>
+                  <Slider
+                    aria-label="Custom marks"
+                    defaultValue={50}
+                    getAriaValueText={valuetext}
+                    step={50}
+                  />
+                </Box>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h5>Leader Focus </h5>
+              </Col>
+              <Col
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Box sx={{ width: 240 }}>
+                  <Slider
+                    aria-label="Custom marks"
+                    defaultValue={50}
+                    getAriaValueText={valuetext}
+                    step={50}
+                  />
+                </Box>
+              </Col>
+            </Row> */}
+          {/* </div> */}
         </Container>
       </div>
     </BuisnessImpactScaleContainer>

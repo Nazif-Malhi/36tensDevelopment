@@ -1,6 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { Form, Row, Col, Container } from "react-bootstrap";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
+import { OutlinedInput, TextField } from "@mui/material";
+
+import countryList from "react-select-country-list";
+import {
+  annualData,
+  companyTypeData,
+  headCount,
+  industries,
+  MarketShare,
+} from "../assets/Data/DropDownData";
+import CustomButton from "../components/Custombutton";
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -8,273 +26,328 @@ const ProfileContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  .account-settings .user-profile {
-    margin: 0 0 1rem 0;
-    padding-bottom: 1rem;
-    text-align: center;
-  }
-  .account-settings .user-profile .user-avatar {
-    margin: 0 0 1rem 0;
-  }
-  .account-settings .user-profile .user-avatar img {
-    width: 90px;
-    height: 90px;
-    -webkit-border-radius: 100px;
-    -moz-border-radius: 100px;
-    border-radius: 100px;
-  }
-  .account-settings .user-profile h5.user-name {
-    margin: 0 0 0.5rem 0;
-  }
-  .account-settings .user-profile h6.user-email {
-    margin: 0;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: #9fa8b9;
-  }
-  .account-settings .about {
-    margin: 2rem 0 0 0;
-    text-align: center;
-  }
-  .account-settings .about h5 {
-    margin: 0 0 15px 0;
-    color: #007ae1;
-  }
-  .account-settings .about p {
-    font-size: 0.825rem;
-  }
-  .form-control {
-    border: 1px solid #cfd1d8;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    font-size: 0.825rem;
-    background: #ffffff;
-    color: #2e323c;
-  }
-
-  .card {
-    background: #ffffff;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    border: 0;
-    margin-bottom: 1rem;
-  }
-
-  .margin {
-    margin: 10px;
+  .profile_wrapper {
+    width: 90%;
+    height: 70%;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 7px;
   }
 `;
 
 const Profile = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const options = useMemo(() => countryList().getData(), []);
+  const [name, setName] = useState("");
   const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const [branch, setBranch] = useState("");
-  const [role, setRole] = useState("");
+  const [city, setCity] = useState("");
+  const [province, setProvince] = useState("");
+  const [country, setCountry] = useState("");
+  const [industry, setIndustry] = useState("");
+  const [totalHeadCount, setTotalHeadCount] = useState("");
+  const [annual, setAnnual] = useState("");
+  const [marketShare, setMarketShare] = useState("");
+  const [companyType, setCompanyType] = useState("");
+  const [email, setEmail] = useState("");
+
   const [profile, setProfile] = useState([]);
+
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
 
   useEffect(() => {
     axios.get("http://207.148.69.16:8011/api/auth-user/").then((response) => {
       setProfile(response.data);
     });
-    setFirstName(profile.first_name);
-    setLastName(profile.last_name);
-    setEmail(profile.email);
-    setAddress(profile.address);
-    setPhone(profile.cell_phone);
-    setBranch(profile.branch);
-    setRole(profile.role);
+
+    // setEmail(profile.email);
+    // setAddress(profile.address);
+    // setPhone(profile.cell_phone);
+    // setBranch(profile.branch);
+    // setRole(profile.role);
   });
 
   return (
     <ProfileContainer>
-      <div className="container">
-        <div className="row gutters">
-          <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-            <div className="card h-100">
-              <div className="card-body">
-                <div className="account-settings">
-                  <div className="user-profile">
-                    <div className="user-avatar">
-                      <img
-                        src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        alt="Maxwell Admin"
-                      />
-                    </div>
-                    <h5 className="user-name">Yuki Hayashi</h5>
-                    <h6 className="user-email">yuki@Maxwell.com</h6>
-                  </div>
-                  <div className="about">
-                    <h5>About</h5>
-                    <p>
-                      I'm Yuki. Full Stack Designer I enjoy creating
-                      user-centric, delightful and human experiences.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
-            <div className="card h-100">
-              <div className="card-body">
-                <div className="row gutters">
-                  <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 className="mb-2 text-primary">Personal Details</h6>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="firstName">First Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="firstName"
-                        placeholder="Enter first name"
-                        value={firstName}
-                        onChange={(e) => {
-                          setFirstName(e.target.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="lastName">Last Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="lastName"
-                        placeholder="Enter last name"
-                        value={lastName}
-                        onChange={(e) => {
-                          setLastName(e.target.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="eMail">Email</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="eMail"
-                        placeholder="Enter email ID"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="phone">Phone</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="phone"
-                        placeholder="Enter phone number"
-                        value={phone}
-                        onChange={(e) => {
-                          setPhone(e.target.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="row gutters">
-                  <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 className="mt-3 mb-2 text-primary">Other</h6>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="Street">Street</label>
-                      <input
-                        type="name"
-                        className="form-control"
-                        id="Street"
-                        placeholder="Enter Street"
-                        value={address}
-                        onChange={(e) => {
-                          setAddress(e.target.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="branch">Branch</label>
-                      <input
-                        type="name"
-                        className="form-control"
-                        id="branch"
-                        placeholder="Enter Branch"
-                        value={branch}
-                        onChange={(e) => {
-                          setBranch(e.target.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="role">Role</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="role"
-                        placeholder="Enter Role"
-                        value={role}
-                        onChange={(e) => {
-                          setRole(e.target.value);
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className="form-group">
-                      <label for="city">City</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="city"
-                        placeholder="Enter City"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="row gutters">
-                  <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div className="text-right ">
-                      <button
-                        type="button"
-                        id="submit"
-                        name="submit"
-                        className="btn btn-secondary margin"
+      <div className="profile_wrapper">
+        <Container>
+          <Row style={{ marginTop: "30px", marginBottom: "20px" }}>
+            <h3>Profile</h3>
+          </Row>
+          <Row style={{ marginBottom: "10px" }}>
+            <Col>
+              <TextField
+                id="outlined-name"
+                label="Name"
+                size="small"
+                fullWidth
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Col>
+            <Col>
+              <TextField
+                id="outlined-address"
+                label="Address"
+                size="small"
+                fullWidth
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </Col>
+            {/* <Col>
+              <FormControl
+                sx={{ width: "100%" }}
+                size="small"
+                style={{ background: "white" }}
+              >
+                <Select
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>Category</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Individual</MenuItem>
+                  <MenuItem value={20}>Group</MenuItem>
+                </Select>
+              </FormControl>
+            </Col>
+            <Col>
+              <FormControl
+                sx={{ width: "100%" }}
+                size="small"
+                style={{ background: "white" }}
+              >
+                <Select
+                  value={position}
+                  onChange={(e) => setPosition(e.target.value)}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                >
+                  <MenuItem value="">
+                    <em>Position's</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Sr. Developer</MenuItem>
+                  <MenuItem value={20}>Finance Manager</MenuItem>
+                  <MenuItem value={30}>IT Manager</MenuItem>
+                  <MenuItem value={30}>Chief Operating Officer</MenuItem>
+                </Select>
+              </FormControl>
+            </Col> */}
+          </Row>
+          <Row style={{ marginBottom: "10px" }}>
+            <Col>
+              <TextField
+                id="outlined-city"
+                label="City"
+                size="small"
+                fullWidth
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+            </Col>
+            <Col>
+              <TextField
+                id="outlined-province"
+                label="Province / Region"
+                size="small"
+                fullWidth
+                value={province}
+                onChange={(e) => setProvince(e.target.value)}
+              />
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "10px" }}>
+            <Col>
+              <FormControl
+                sx={{ width: "100%" }}
+                size="small"
+                style={{ background: "white" }}
+              >
+                <InputLabel id="demo-multiple-name-label">Country </InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  input={<OutlinedInput label="Name" />}
+                >
+                  {options.map((val, id) => {
+                    return (
+                      <MenuItem key={val.value} value={val.value}>
+                        {val.label}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Col>
+            <Col>
+              <FormControl
+                sx={{ width: "100%" }}
+                size="small"
+                style={{ background: "white" }}
+              >
+                <InputLabel id="demo-multiple-name-label">Industry </InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  value={industry}
+                  onChange={(e) => setIndustry(e.target.value)}
+                  input={<OutlinedInput label="Industry" />}
+                >
+                  {industries.map((val, id) => {
+                    return (
+                      <MenuItem
+                        key={val.Industry_name}
+                        value={val.Industry_name}
                       >
-                        Cancel
-                      </button>
-                      <button
-                        type="button"
-                        id="submit"
-                        name="submit"
-                        className="btn btn-primary margin"
-                        // onClick={console.log(profile)}
-                      >
-                        Update
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                        {val.Industry_name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "10px" }}>
+            <Col>
+              <FormControl
+                sx={{ width: "100%" }}
+                size="small"
+                style={{ background: "white" }}
+              >
+                <InputLabel id="demo-multiple-name-label">
+                  Total Head Count{" "}
+                </InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  value={totalHeadCount}
+                  onChange={(e) => setTotalHeadCount(e.target.value)}
+                  input={<OutlinedInput label="Total Head Count" />}
+                >
+                  {headCount.map((val, id) => {
+                    return (
+                      <MenuItem key={val.head} value={val.head}>
+                        {val.head}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Col>
+            <Col>
+              <FormControl
+                sx={{ width: "100%" }}
+                size="small"
+                style={{ background: "white" }}
+              >
+                <InputLabel id="demo-multiple-name-label">
+                  Annual Revenue in USD{" "}
+                </InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  value={annual}
+                  onChange={(e) => setAnnual(e.target.value)}
+                  input={<OutlinedInput label="Annual Revenue in USD" />}
+                >
+                  {annualData.map((val, id) => {
+                    return (
+                      <MenuItem key={val.annual} value={val.annual}>
+                        {val.annual}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "10px" }}>
+            <Col>
+              <FormControl
+                sx={{ width: "100%" }}
+                size="small"
+                style={{ background: "white" }}
+              >
+                <InputLabel id="demo-multiple-name-label">
+                  Company Type{" "}
+                </InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  value={companyType}
+                  onChange={(e) => setCompanyType(e.target.value)}
+                  input={<OutlinedInput label="Company Type" />}
+                >
+                  {companyTypeData.map((val, id) => {
+                    return (
+                      <MenuItem key={val.company} value={val.company}>
+                        {val.company}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Col>
+            <Col>
+              <FormControl
+                sx={{ width: "100%" }}
+                size="small"
+                style={{ background: "white" }}
+              >
+                <InputLabel id="demo-multiple-name-label">
+                  Market Share{" "}
+                </InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  value={marketShare}
+                  onChange={(e) => setMarketShare(e.target.value)}
+                  input={<OutlinedInput label="Market Share" />}
+                >
+                  {MarketShare.map((val, id) => {
+                    return (
+                      <MenuItem key={val.share} value={val.share}>
+                        {val.share}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </Col>
+          </Row>
+        </Container>
+        <Row>
+          <Col
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+            }}
+          >
+            <CustomButton
+              type={"cancel textnormal margin-top margin-right20"}
+              width="120px"
+              height="40px"
+            >
+              Cancel
+            </CustomButton>
+            <CustomButton
+              type={"normal textnormal margin-top margin-right20"}
+              width="120px"
+              height="40px"
+            >
+              Update
+            </CustomButton>
+          </Col>
+        </Row>
       </div>
     </ProfileContainer>
   );

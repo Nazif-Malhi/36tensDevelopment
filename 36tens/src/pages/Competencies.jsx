@@ -138,68 +138,86 @@ function CreateCompetencyModal(props) {
   );
 }
 
-const steps = ["Impact Scale", "Assign", "Preview", "Done"];
-
-
-
+const steps = ["Impact Scale", "Preview", "Assign", "Done"];
 
 const Competencies = () => {
-  const [createCompetency_Modal, setCompetency_Modal] = useState(false);
-
-  const [compValues, setCompValues] = useState([]);
-  const [isShowQuestion, setShowQuestion] = useState(true);
-  const [indexOfComp, setIndexOfComp] = useState(0);
-
+  // const [compValues, setCompValues] = useState([]);
   const [stepIndex, setStepIndex] = useState(0);
-
   const [show, setShow] = useState(false);
+  const [buisnessCardDataIndex, setBuisnessCardDataIndex] = useState(0);
 
+  // const [createCompetency_Modal, setCompetency_Modal] = useState(false);
 
-  const [competencies, setCompetencies] = useState({});
+  // const [isShowQuestion, setShowQuestion] = useState(true);
+  // const [indexOfComp, setIndexOfComp] = useState(0);
+
+  // const [competencies, setCompetencies] = useState({});
 
   const handleNext = () => {
     if (stepIndex < 4) {
-      setStepIndex(stepIndex + 1);
-      if (stepIndex === 1) {
+      if (stepIndex === 0) {
         setShow(true);
-        setStepIndex(stepIndex + 2);
-      } else if (stepIndex === 3) {
+        setStepIndex(stepIndex + 1);
+      } else if (stepIndex === 1) {
         setShow(false);
+        setStepIndex(stepIndex + 1);
+      } else if (stepIndex === 2) {
+        setStepIndex(stepIndex + 1);
       }
+      // setStepIndex(stepIndex + 1);
+      // if (stepIndex === 1) {
+      //   setShow(true);
+      //   setStepIndex(stepIndex + 2);
+      // } else if (stepIndex === 3) {
+      //   setShow(false);
+      // }
     }
     console.log("next " + stepIndex);
   };
   const handleBack = () => {
     if (stepIndex > 0) {
-      setStepIndex(stepIndex - 1);
       if (stepIndex === 3) {
-        setStepIndex(stepIndex - 2);
-        setShow(false);
-      } else if (stepIndex === 4) {
+        // setShow(true);
         setStepIndex(stepIndex - 1);
+      } else if (stepIndex === 2) {
         setShow(true);
+        setStepIndex(stepIndex - 1);
+      } else if (stepIndex === 1) {
+        setStepIndex(stepIndex - 1);
+        setShow(false);
       }
+      // setStepIndex(stepIndex - 1);
+      // if (stepIndex === 3) {
+      //   setStepIndex(stepIndex - 2);
+      //   setShow(false);
+      // } else if (stepIndex === 4) {
+      //   setStepIndex(stepIndex - 1);
+      //   setShow(true);
+      // }
     }
     console.log("back " + stepIndex);
   };
 
-  let addCompetency = (val) => {
-    setCompValues([...compValues, val]);
-    setCompetency_Modal(false);
-    setShowQuestion(false);
-  };
+  // let addCompetency = (val) => {
+  //   setCompValues([...compValues, val]);
+  //   setCompetency_Modal(false);
+  //   setShowQuestion(false);
+  // };
 
-  let removeCompetency = (index) => {
-    let temp = [...compValues];
-    temp.splice(index, 1);
-    setCompValues(temp);
-  };
+  // let removeCompetency = (index) => {
+  //   let temp = [...compValues];
+  //   temp.splice(index, 1);
+  //   setCompValues(temp);
+  // };
 
-  let showCompetenciesQuestion = (index) => {
-    setShowQuestion(true);
-    setIndexOfComp(index);
-  };
+  // let showCompetenciesQuestion = (index) => {
+  //   setShowQuestion(true);
+  //   setIndexOfComp(index);
+  // };
 
+  let handleBuissnessCardDataIndex = (index) => {
+    setBuisnessCardDataIndex(index);
+  };
   return (
     <>
       <Competenciescontainer>
@@ -214,47 +232,47 @@ const Competencies = () => {
               }}
             >
               <div className="header">
-                <h2>Competencies </h2>
+                <h2>
+                  {stepIndex === 0 ? "Competency Types" : "Competencies"}{" "}
+                </h2>
               </div>
-               
-              
+
               <div className="competenciesBody">
-                
                 {/* Competencies */}
                 {competencies_data.map((value, index) => {
-
-                  
-                  
-                return(
-                  stepIndex === 0 ?  <CompetenciesCards
-                  key={index}
-                  index={index}
-                  // title={stepIndex === 0 ? value.competency_type : val.competency_name}
-                  title={value.competency_type}
-                  // question={value.questions}
-                  handleClick={() => showCompetenciesQuestion(index)}
-                /> :
-                  value.competencies.map((val, id) => {
-                    return (
-                      <CompetenciesCards
-                        key={index}
-                        index={index}
-                        // title={stepIndex === 0 ? value.competency_type : val.competency_name}
-                        title={val.competency_name}
-                        // question={value.questions}
-                        handleClick={() => showCompetenciesQuestion(index)}
-                      />
-                    );  
-                    
-                  })
-                )
-                  // value.competencies[index].map((val, ind) => {
-                    
-                  // })
+                  return (
+                    // stepIndex === 0 ?
+                    <CompetenciesCards
+                      key={index}
+                      index={index}
+                      title={value.competency_type}
+                      question={value.competencies}
+                      handleClick={() => handleBuissnessCardDataIndex(index)}
+                      // handleClick={() => showCompetenciesQuestion(index)}
+                    />
+                  );
+                  //: (
+                  //   value.competencies.map((val, id) => {
+                  //     return (
+                  //       <CompetenciesCards
+                  //         key={index}
+                  //         index={index}
+                  //         // title={stepIndex === 0 ? value.competency_type : val.competency_name}
+                  //         title={val.competency_name}
+                  //         question={val.statements}
+                  //         handleClick={() => showCompetenciesQuestion(index)}
+                  //       />
+                  //     );
+                  //   })
+                  // );
                 })}
 
+                {/* value.competencies[index].map((val, ind) => { */}
+
+                {/* // }) */}
+
                 {/* Dynamically Competencies */}
-                {packageSelected === "standard"
+                {/* {packageSelected === "standard"
                   ? null
                   : compValues.map((value, index) => {
                       return (
@@ -264,20 +282,19 @@ const Competencies = () => {
                           handleClick={() => removeCompetency(index)}
                         />
                       );
-                    })}
+                    })} */}
               </div>
-              <div>
+              {/* <div>
                 {packageSelected === "standard" ? null : (
-                <CompetenciesCards
-                  title={"Create new competency"}
-                  handleClick={() => {
-                    setCompetency_Modal(true);
-                  }}
-                  type={"add"}
-                />
-              )}
-              </div>
-              
+                  <CompetenciesCards
+                    title={"Create new competency"}
+                    handleClick={() => {
+                      setCompetency_Modal(true);
+                    }}
+                    type={"add"}
+                  />
+                )}
+              </div> */}
             </Col>
 
             <Col>
@@ -297,14 +314,14 @@ const Competencies = () => {
               <Row>
                 <div className="body">
                   {stepIndex === 0 ? (
-                    <BuisnessImpactScale />
+                    <BuisnessImpactScale index={buisnessCardDataIndex} />
                   ) : // <CompetenciesQuest
                   //   type={isShowQuestion}
                   //   index={indexOfComp}
                   // />
-                  stepIndex === 1 ? (
+                  stepIndex === 2 ? (
                     <Assign />
-                  ) : stepIndex === 4 ? (
+                  ) : stepIndex === 3 ? (
                     // <BuisnessImpactScale />
                     <Done />
                   ) : // ) : stepIndex === 5 ? (
@@ -343,11 +360,11 @@ const Competencies = () => {
             </Col>
           </Row>
           {/* </Container> */}
-          <CreateCompetencyModal
+          {/* <CreateCompetencyModal
             show={createCompetency_Modal}
             onHide={() => setCompetency_Modal(false)}
             onCreate={(e) => addCompetency(e)}
-          />
+          /> */}
           <PreviewModal
             show={show}
             onHide={() => handleBack()}

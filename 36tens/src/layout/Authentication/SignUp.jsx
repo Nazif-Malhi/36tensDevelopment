@@ -12,7 +12,7 @@ import { BsCheckCircleFill } from "react-icons/bs";
 const SignUpContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 120vh;
+  height: 140vh;
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -82,6 +82,12 @@ const SignUp = () => {
   const [age, setAge] = useState("");
   const [type, setType] = useState("");
   const [custom, setCustom] = useState(false);
+
+  const [name, setName] = useState("");
+  const [num, setNum] = useState("");
+  const [compName, setCompName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   console.log(type);
 
@@ -243,7 +249,7 @@ const SignUp = () => {
           <Row>
             <Col>
               <CustomButton
-                type={"normal textnormal"}
+                type={"normal textnormal margin-top"}
                 width={"130px"}
                 height={"40px"}
               >

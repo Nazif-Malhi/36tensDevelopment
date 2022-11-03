@@ -24,11 +24,23 @@ const ButtonStyle = styled.div`
       background: #232340;
     }
   }
+  .cancel {
+    background: #c3cad9;
+    border-radius: 7px;
+    border: none;
+    :hover {
+      background: #232340;
+    }
+    color: black;
+  }
   .textnormal {
     color: #ffffff;
   }
   .margin-right {
     margin-right: 10px;
+  }
+  .margin-right20 {
+    margin-right: 30px;
   }
   .margin-top {
     margin-top: 10px;

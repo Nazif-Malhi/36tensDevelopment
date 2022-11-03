@@ -8,6 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import CustomButton from "../../components/Custombutton";
 import { Logo } from "../../assets/images";
 import { BsCheckCircleFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const SignUpContainer = styled.div`
   display: flex;
@@ -88,6 +89,8 @@ const SignUp = () => {
   const [compName, setCompName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   console.log(type);
 
@@ -252,6 +255,9 @@ const SignUp = () => {
                 type={"normal textnormal margin-top"}
                 width={"130px"}
                 height={"40px"}
+                onClick={() => {
+                  navigate("/admin/profile");
+                }}
               >
                 Sign-Up
               </CustomButton>

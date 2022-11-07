@@ -147,6 +147,7 @@ const BuisnessImpactScale = ({ index }) => {
           </Row>
           <div className="scrollContainer">
             {competencies_data[index].competencies.map((val, id) => {
+              console.log(val.competency_name)
               return (
                 <Row key={id}>
                   <Col>
@@ -155,16 +156,16 @@ const BuisnessImpactScale = ({ index }) => {
                   <Col>
                     <Row>
                       <Col style={{ textAlign: "center" }}>
-                        <Form.Check type="radio" aria-label="radio 1" />
+                        <Form.Check type="radio" aria-label="radio 1" name={id} />
                       </Col>
                       <Col style={{ textAlign: "center" }}>
-                        <Form.Check type="radio" aria-label="radio 1" />
+                        <Form.Check type="radio" aria-label="radio 1" name={id} />
                       </Col>
                       <Col style={{ textAlign: "center" }}>
-                        <Form.Check type="radio" aria-label="radio 1" />
+                        <Form.Check type="radio" aria-label="radio 1" name={val.competency_name} />
                       </Col>
                       <Col style={{ textAlign: "center" }}>
-                        <Form.Check type="radio" aria-label="radio 1" />
+                        <Form.Check type="radio" aria-label="radio 1" name={val.competency_name} />
                       </Col>
                     </Row>
                   </Col>

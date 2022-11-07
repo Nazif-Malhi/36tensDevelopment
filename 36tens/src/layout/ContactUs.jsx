@@ -53,10 +53,7 @@ const ContactUs = ({ id }) => {
           rows="10"
           cols="30"
           placeholder="Description"
-          style={{
-            boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-            border: "none",
-          }}
+          
         />
       </div>
       <CustomButton type={"normal textnormal"} width={"100px"} height={"35px"}>

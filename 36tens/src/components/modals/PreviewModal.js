@@ -51,35 +51,39 @@ const PreviewModal = ({ show, onHide, onProceed }) => {
           <div className="border" style={{ marginTop: "20px" }} />
 
           <div className="body">
-            {competencies_data.map((value,key) => {
-              return(
-               value.competencies.map((val, id) => {
-                return(
-                  val.statements.map((qu,ty) => {
-                    return(
-                      <Row style={{ height: "80px", alignItems: "center" }} key={key}>
-                  <Col md={"auto"} style={{ width: "40px", padding: "0px" }}>
-                    <h5 style={{ marginLeft: "10px" }}>{key+id+ty} .</h5>
-                  </Col>
-                  <Col
-                    xs={12}
-                    md={8}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <h6 style={{ marginBottom: "0px" }} key={key}>
-                      {qu}
-                    </h6>
-                  </Col>
-                  <Col>
-                    <Labeling />
-                  </Col>
-                  <div className="border" />
-                </Row>
-                    )
-                  })
-                )
-               })
-              )
+            {competencies_data.map((value, key) => {
+              return value.competencies.map((val, id) => {
+                return val.statements.map((qu, ty) => {
+                  return (
+                    <Row
+                      style={{ height: "80px", alignItems: "center" }}
+                      key={key}
+                    >
+                      <Col
+                        md={"auto"}
+                        style={{ width: "40px", padding: "0px" }}
+                      >
+                        <h5 style={{ marginLeft: "10px" }}>
+                          {key + id + ty} .
+                        </h5>
+                      </Col>
+                      <Col
+                        xs={12}
+                        md={8}
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        <h6 style={{ marginBottom: "0px" }} key={key}>
+                          {qu}
+                        </h6>
+                      </Col>
+                      <Col>
+                        <Labeling />
+                      </Col>
+                      <div className="border" />
+                    </Row>
+                  );
+                });
+              });
             })}
             {/* {competencies_questions.map((val, key) => {
               return (

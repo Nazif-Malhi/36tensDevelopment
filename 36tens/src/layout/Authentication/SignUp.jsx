@@ -9,6 +9,7 @@ import CustomButton from "../../components/Custombutton";
 import { Logo } from "../../assets/images";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUpContainer = styled.div`
   display: flex;
@@ -80,19 +81,48 @@ const style = {
   background: "white",
 };
 const SignUp = () => {
-  const [age, setAge] = useState("");
   const [type, setType] = useState("");
   const [custom, setCustom] = useState(false);
 
-  const [name, setName] = useState("");
-  const [num, setNum] = useState("");
-  const [compName, setCompName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [number, setNumber] = useState("");
+  const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
-  console.log(type);
+  async function handleSignUp () {
+    const userSignUpData = {
+      first_name: firstName,
+      last_name: lastName,
+      contact_num: number,
+      type: type,
+      company_name: companyName,
+      email: email,
+      password: password,
+      package_title: custom ? "Custom" : "Standard",
+    }
+
+    try{
+        const res = await axios.put("http://192.168.18.8:8000/api/users/", userSignUpData)
+       .then((response) => console.log(response))
+       .catch((error) => {
+         console.log(error);
+       })
+    }
+    catch (err){
+        console.log(err);
+    }
+  }
+
+    // const res = await axios.put("http://192.168.18.8:8000/api/users/", userSignUpData)
+    //   .then((response) => console.log(response))
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
+  
 
   return (
     <SignUpContainer>
@@ -104,10 +134,28 @@ const SignUp = () => {
           <Row>
             <Col sm>
               <TextField
-                label="Name"
-                placeholder="Enter Your Full Name"
+                label="First Name"
+                placeholder="Enter Your First Name"
                 style={style}
                 size="small"
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col sm>
+              <TextField
+                label="Last Name"
+                placeholder="Enter Your Last Name"
+                style={style}
+                size="small"
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                }}
               />
             </Col>
           </Row>
@@ -118,6 +166,10 @@ const SignUp = () => {
                 placeholder="Enter Your Mobile Number"
                 style={style}
                 size="small"
+                value={number}
+                onChange={(e) => {
+                  setNumber(e.target.value);
+                }}
               />
             </Col>
           </Row>
@@ -136,8 +188,8 @@ const SignUp = () => {
                   <MenuItem value="">
                     <em style={{ fontStyle: "unset" }}>Who are you ?</em>
                   </MenuItem>
-                  <MenuItem value={10}>Indvidual</MenuItem>
-                  <MenuItem value={20}>Company</MenuItem>
+                  <MenuItem value={"Individual"}>Indvidual</MenuItem>
+                  <MenuItem value={"Company"}>Company</MenuItem>
                 </Select>
               </FormControl>
             </Col>
@@ -149,20 +201,32 @@ const SignUp = () => {
                 placeholder="Enter Your Company Name"
                 style={style}
                 size="small"
-                disabled={type === 10 || type === 20 ? false : true}
+                disabled={type === "Company" ? false : true}
+                value={companyName}
+                onChange={(e) => {
+                  setCompanyName(e.target.value);
+                }}
               />
             </Col>
           </Row>
           <Row>
             <Col sm>
               <TextField
-                label={type === 20 ? "Company Email" : "Email"}
+                label={type === "Company" ? "Company Email" : "Email"}
                 placeholder={
-                  type === 20 ? "Enter Your Company Email" : "Enter Your Email"
+                  type === "Company"
+                    ? "Enter Your Company Email"
+                    : "Enter Your Email"
                 }
                 style={style}
                 size="small"
-                disabled={type === 10 || type === 20 ? false : true}
+                disabled={
+                  type === "Individual" || type === "Company" ? false : true
+                }
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
             </Col>
           </Row>
@@ -184,6 +248,10 @@ const SignUp = () => {
                 placeholder="Please Enter Your Password"
                 style={style}
                 size="small"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
             </Col>
           </Row>
@@ -256,7 +324,8 @@ const SignUp = () => {
                 width={"130px"}
                 height={"40px"}
                 onClick={() => {
-                  navigate("/admin/profile");
+                  handleSignUp();
+                  // navigate("/admin/profile");
                 }}
               >
                 Sign-Up

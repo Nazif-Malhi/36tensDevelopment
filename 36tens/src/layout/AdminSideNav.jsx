@@ -23,6 +23,10 @@ const SideNavComponent = styled.div`
       color: white;
     }
   }
+
+  .box{
+    width
+  }
 `;
 
 const Circle = styled(NavLink)`
@@ -43,6 +47,7 @@ const Circle = styled(NavLink)`
     color: white;
   }
 `;
+
 const AdminSideNav = () => {
   const [isActive, setActive] = useState("");
   const handleIsActive = (val) => {
@@ -102,7 +107,19 @@ const AdminSideNav = () => {
       >
         <AiOutlineUserSwitch style={{ style }} />
       </Circle>
-
+      <div className="box">
+        <ul>
+          <li>
+            Groups
+          </li>
+          <li>
+            Department
+          </li>
+          <li>
+            Designation
+          </li>
+        </ul>
+      </div>
       <Circle
         to="questionier"
         className={isActive === "questionier" ? "isActive" : ""}

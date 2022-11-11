@@ -15,7 +15,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 import { rows as databaseRow } from "../assets/Data/Database";
 
-const ActionContainer = styled.div`
+  const ActionContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
